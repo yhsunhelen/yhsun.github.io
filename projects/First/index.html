@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FIRST — Multisensory Educational System</title>
+  <meta name="description" content="FIRST: multisensory educational system for visually impaired children. Tangible modules + NFC recognition + audio guidance." />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="home-link" href="../../index.html">← Home</a>
+
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#what-built">What I Built</a>
+        <a href="#flow">System Flow</a>
+        <a href="#implementation">Implementation</a>
+        <a href="#outcome">Outcome</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="hero" id="overview">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Project · Assistive Tech · Tangible Interaction</p>
+          <h1>FIRST</h1>
+          <p class="subtitle">
+            A multisensory educational system for visually impaired children. I focused on making the prototype work reliably:
+            tangible modules are recognized by NFC, mapped to content, and played back with immediate audio feedback.
+          </p>
+
+          <div class="chips">
+            <span class="chip accent">Tangible UI</span>
+            <span class="chip">NFC (PN532)</span>
+            <span class="chip">Arduino (C)</span>
+            <span class="chip pink">Audio Feedback</span>
+            <span class="chip">Python</span>
+            <span class="chip">Flutter (Dart)</span>
+          </div>
+
+          <div class="panel">
+            <div class="panel-inner">
+              <div class="meta">
+                <div class="meta-row">
+                  <div class="k">My role</div>
+                  <div class="v"><strong>Hardware + Software implementation</strong></div>
+                </div>
+                <div class="meta-row">
+                  <div class="k">Main work</div>
+                  <div class="v">NFC sensing → UID mapping → audio playback loop; voice guidance pipeline integration</div>
+                </div>
+               <!-- <div class="meta-row">
+                  <div class="k">Design focus</div>
+                  <div class="v">Low cognitive load · Consistent mapping · Safe & friendly form</div>
+                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO IMAGE -->
+        <figure class="figure">
+          <img src="assets/first-hero.png" alt="FIRST prototype overview." />
+          <figcaption><span class="cap">Figure 1.</span> FIRST prototype overview (replace with your image).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- WHAT I BUILT -->
+    <section class="section divider" id="what-built">
+      <div class="grid">
+        <div class="left">
+          <h2>What I Built</h2>
+          <!--<p class="note">Not a long research story—just what was implemented and made to run.</p>-->
+        </div>
+
+        <div class="right">
+            <figure class="figure">
+              <img src="assets/first-what-built.png" alt="FIRST prototype detail (NFC + audio module)" />
+              <figcaption><span class="cap">Figure.</span> Prototype detail (NFC reader + audio playback).</figcaption>
+            </figure>
+          <div class="cards">
+            <article class="card">
+              <h3>NFC recognition loop</h3>
+              <p>PN532 reads tag UID, maps to content, triggers audio playback with stable repeat handling.</p>
+              <ul class="list tight">
+                <li>UID read + validity checks</li>
+                <li>Mapping table (UID → track/content)</li>
+                <li>Debounce / repeated-read protection</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Audio feedback module</h3>
+              <p>DFPlayer Mini plays local files with immediate confirmation and simple control logic.</p>
+              <ul class="list tight">
+                <li>Local audio content on SD card</li>
+                <li>Clear “confirm / prompt / next” sounds</li>
+                <li>Speaker output tuning for clarity</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Voice guidance slice</h3>
+              <p>Speech in → text → response → speech out (for caregiver guidance / assistance).</p>
+              <ul class="list tight">
+                <li>Wake / input → STT</li>
+                <li>Content selection / intent</li>
+                <li>TTS output</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Interaction consistency</h3>
+              <p>Same physical rule across different content sets, so kids can learn once and reuse.</p>
+              <ul class="list tight">
+                <li>Stable module placement cues</li>
+                <li>Consistent audio confirmation</li>
+                <li>Expandable themed sets</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="callout">
+            <p class="muted" style="margin:0">
+              I turned a modular tactile concept into a working system: a child touches a module, the device recognizes it, and audio immediately guides what to do next.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SYSTEM FLOW -->
+    <section class="section divider" id="flow">
+      <div class="grid">
+        <div class="left">
+          <h2>System Flow</h2>
+        </div>
+
+        <div class="right">
+          <p class="muted" style="margin-top:0">
+            A child selects a tactile module and brings it to the base. The NFC reader identifies the module by UID, the controller looks up the corresponding content,
+            and the speaker plays an audio prompt for confirmation and instruction. In voice mode, speech is converted to text, the system decides a response or content action,
+            and outputs speech again—so the interaction stays touch-first, audio-confirmed.
+          </p>
+
+          <figure class="figure">
+            <img src="assets/first-diagram.png" alt="FIRST system flow diagram." />
+            <figcaption><span class="cap">Figure 2.</span> System flow diagram (replace with your image).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPLEMENTATION -->
+    <section class="section divider" id="implementation">
+      <div class="grid">
+        <div class="left">
+          <h2>Implementation</h2>
+        </div>
+
+        <div class="right">
+          <p class="muted" style="margin-top:0">
+            The prototype core is a tight loop: read UID, map to track, play audio, and avoid repeated triggers when the tag stays close.
+            (This is exactly the part that decides whether a demo feels “reliable” or “glitchy”.)
+          </p>
+
+          <pre class="code">loop:
+  uid = nfc.readUID()
+  if uid is valid and uid != last_uid:
+      track = mapUID(uid)
+      player.play(track)
+      last_uid = uid</pre>
+
+          <details class="details">
+            <summary>Optional: voice guidance pseudo-flow (click to expand)</summary>
+            <pre class="code">wake → speech input
+speech → text (STT)
+text → intent / content selection
+response text → speech (TTS)
+audio out</pre>
+          </details>
+
+          <figure class="figure">
+            <img src="assets/first-prototype.png" alt="FIRST prototype detail." /> 
+            <figcaption><span class="cap">Figure 3.</span> Prototype detail (optional image).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUTCOME -->
+    <section class="section divider" id="outcome">
+      <div class="grid">
+        <div class="left">
+          <h2>Outcome</h2>
+        </div>
+
+        <div class="right">
+          <div class="cards">
+            <article class="card">
+              <h3>Works as a repeatable learning loop</h3>
+              <p>Touch → recognition → confirmation → instruction, with low cognitive load.</p>
+            </article>
+            <article class="card">
+              <h3>Modular content scales easily</h3>
+              <p>New sets can be added without changing the device behavior.</p>
+            </article>
+          </div>
+
+          <div class="callout">
+            <p class="callout-title">Next step (if needed)</p>
+            <p class="muted" style="margin:0">
+              Expand content sets and run short caregiver-assisted trials to evaluate learnability and error cases (mis-reads, repeated reads, guidance clarity).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© <span id="y"></span> YuhangSUN</div>
+        <div class="muted">FIRST · Hardware & Software Prototype</div>
+      </div>
+    </footer>
+
+  </main>
+
+  <a class="to-top" href="#overview" id="toTop">↑ Top</a>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+    const btn = document.getElementById("toTop");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 800) btn.classList.add("show");
+      else btn.classList.remove("show");
+    });
+  </script>
+</body>
+</html>

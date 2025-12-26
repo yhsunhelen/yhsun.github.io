@@ -1,50 +1,712 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuhang Sun · Homepage</title>
-  <meta name="description" content="Yuhang Sun · A minimal one-page biography with a button to view or download the PDF CV." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YuhangSUN | Portfolio</title>
+
   <style>
-    :root{--bg:#f7f8fb;--text:#1b1f23;--muted:#61656c;--line:#e1e4e8;--brand:#0a66c2}
-    *{box-sizing:border-box}
-    body{margin:0;font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,"PingFang SC","Noto Sans SC",Arial,sans-serif;color:var(--text);background:var(--bg);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
-    .card{max-width:700px;width:100%;background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    h1{margin:0 0 6px;font-size:28px}
-    .sub{color:var(--muted);margin-bottom:12px}
-    p{color:var(--muted);margin:10px 0 0}
-    .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-    .btn{display:inline-block;padding:12px 18px;border-radius:12px;border:1px solid var(--brand);background:var(--brand);color:#fff;text-decoration:none;font-weight:600}
-    .btn.ghost{background:transparent;color:var(--brand)}
-    .btn:hover{opacity:.92}
-    footer{margin-top:22px;text-align:center;color:var(--muted);font-size:14px}
-    @media (prefers-color-scheme: dark){:root{--bg:#0c0d10;--text:#e8e8ea;--muted:#a0a3ab;--line:#2a2f36;--brand:#7ab7ff}.card{background:#15171c;border-color:var(--line)}.btn{border-color:var(--brand);background:var(--brand);color:#fff}.btn.ghost{background:transparent;color:var(--brand)}}
+    /* ----------------------------
+      Theme tokens
+      默认 light；dark 用 [data-theme="dark"] 覆盖
+    ---------------------------- */
+    :root{
+      --max: 1180px;
+      --radius: 18px;
+
+      /* Light */
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #4b4b4b;
+      --muted2:#6a6a6a;
+      --line: #e7e7e7;
+
+      --header-bg: rgba(255,255,255,.86);
+      --header-hover: rgba(0,0,0,.04);
+
+      --card-bg: #ffffff;
+      --shadow: 0 18px 55px rgba(0,0,0,.10);
+
+      --thumb-bg: #f4f4f4;
+
+      --footer-cta-bg: #ffffff;
+      --footer-cta-text: #111;
+
+      --copyright-bg: #3d3d3d;
+      --copyright-text: #eaeaea;
+    }
+
+    html[data-theme="dark"]{
+      --bg:#050505;
+      --text:#eaeaea;
+      --muted:#bdbdbd;
+      --muted2:#8c8c8c;
+      --line:#222;
+
+      --header-bg: rgba(5,5,5,.72);
+      --header-hover: rgba(255,255,255,.06);
+
+      --card-bg: rgba(255,255,255,.02);
+      --shadow: 0 30px 80px rgba(0,0,0,.45);
+
+      --thumb-bg: #0f0f0f;
+
+      /* 你参考图3是白底 footer，这里保留白底（对比更强） */
+      --footer-cta-bg: #ffffff;
+      --footer-cta-text: #111;
+
+      --copyright-bg: #3d3d3d;
+      --copyright-text: #eaeaea;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    /* 让锚点跳转不会被 sticky header 挡住 */
+    section[id] { scroll-margin-top: 84px; }
+
+    body{
+      margin:0;
+      padding-top: 64px; 
+      background:var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      letter-spacing: .2px;
+    }
+
+    a{ color:inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 22px; }
+
+    /* ----------------------------
+      Header / Nav
+    ---------------------------- */
+    header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      height: 64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+    }
+    .brand{
+      font-weight: 650;
+      letter-spacing: .4px;
+      opacity:.95;
+      white-space: nowrap;
+    }
+    .navlinks{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .navlinks a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      text-decoration:none;
+    }
+    .navlinks a:hover{
+      background: var(--header-hover);
+      text-decoration:none;
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 1px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: rgba(255,255,255,.0);
+      text-decoration:none;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn:hover{
+      background: var(--header-hover);
+      text-decoration:none;
+    }
+
+    .themebtn{
+      gap: 8px;
+    }
+    .theme-ico{
+      width: 18px;
+      height: 18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      opacity: .9;
+    }
+
+    /* ----------------------------
+      Sections
+    ---------------------------- */
+    .section{
+      padding: 22px 0 40px;
+    }
+    .section h2{
+      margin: 0 0 18px;
+      font-size: 16px;
+      letter-spacing: 1.6px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ----------------------------
+      About (左文右图)
+    ---------------------------- */
+    .about-2col{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 44px;
+      align-items:start;
+      padding: 18px 0 10px;
+    }
+
+    .about-name{
+      margin: 0 0 10px;
+      font-size: 54px;
+      line-height: 1.05;
+      letter-spacing: .2px;
+      color: var(--text);
+    }
+    .about-affil{
+      margin: 0 0 22px;
+      font-size: 22px;
+      color: #662c99; /* 参考图紫色强调 */
+    }
+    .about-text{
+      margin: 0 0 22px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 18px;
+      max-width: 72ch;
+    }
+
+    /* 联系方式行 */
+    .contact-row{
+      display:flex;
+      flex-wrap: wrap;
+      align-items:center;
+      gap: 18px;
+      color: var(--text);
+    }
+    .contact-item{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--text);
+      opacity: .95;
+    }
+    .contact-item .hint{
+      color: var(--muted2);
+      font-size: 14px;
+    }
+
+    /* 预留 SVG icon 的尺寸 */
+    .ico{
+      width: 22px;
+      height: 22px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      opacity: .9;
+      flex: 0 0 auto;
+    }
+    .ico svg{ width: 100%; height: 100%; display:block; }
+
+    /* 右侧照片卡片 */
+    .about-photo{
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow:hidden;
+      background: var(--thumb-bg);
+      box-shadow: var(--shadow);
+    }
+    .about-photo img{
+      width: 100%;
+      height: auto;
+      display:block;
+      object-fit: cover;
+    }
+
+    @media (max-width: 900px){
+      .about-2col{
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .about-name{ font-size: 42px; }
+      .about-text{ font-size: 16px; }
+    }
+
+    /* ----------------------------
+      Projects grid
+    ---------------------------- */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    @media (max-width: 1020px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+      .navlinks{ display:none; }
+    }
+
+    .card{
+      display:block;
+      text-decoration:none;
+    }
+    .card:hover{ text-decoration:none; }
+
+    .thumb{
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: var(--thumb-bg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.01);
+      transition: transform .18s ease;
+      /* 你的参考图是偏灰度风，可保留；想彩色就删掉 filter */
+      /*filter: grayscale(1) contrast(1.05) brightness(.95);*/
+    }
+    .card:hover .thumb img{ transform: scale(1.04); }
+
+    .card-title{
+      margin: 12px 0 4px;
+      font-size: 16px;
+      letter-spacing: .1px;
+      color: var(--text);
+    }
+    .card-tags{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ----------------------------
+      Footer CTA (白底大图标)
+    ---------------------------- */
+    .footer-cta{
+      margin-top: 26px;
+      padding: 52px 0 44px;
+      background: var(--footer-cta-bg);
+      color: var(--footer-cta-text);
+    }
+    .footer-cta .wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction: column;
+      gap: 18px;
+      text-align:center;
+    }
+    .big-icons{
+      display:flex;
+      gap: 26px;
+      align-items:center;
+      justify-content:center;
+    }
+    .big-ico{
+      width: 74px;
+      height: 74px;
+      border-radius: 999px;
+      background:#111;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .big-ico svg{ width: 44px; height: 44px; fill:#fff; }
+    .footer-cta p{
+      margin:0;
+      font-size: 18px;
+      color: var(--footer-cta-text);
+      opacity:.9;
+    }
+
+    .copyright-bar{
+      background: var(--copyright-bg);
+      color: var(--copyright-text);
+      font-size: 14px;
+      padding: 12px 0;
+    }
+    .copyright-bar .wrap{
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .mutelink{
+      color: var(--copyright-text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* 可选：平滑滚动（锚点体验更好） */
+    html { scroll-behavior: smooth; }
+
+    /* ====== Typography & spacing (更像学术主页) ====== */
+
+    /* 全局文字更小、行距更松 */
+    body{
+      font-size: px;           /* 原来视觉偏大，可再调 15/16 */
+      line-height: 2;
+    }
+
+    /* About 的标题更克制 */
+    .about-name{
+      font-size: 32px;           /* 原来 54 太大；像图里更收敛 */
+      letter-spacing: .1px;
+      margin-bottom: 12px;
+    }
+
+    /* 单位那行更轻一些 */
+    .about-affil{
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    /* 正文更像论文/学术个人主页 */
+    .about-text{
+      font-size: 14px;           /* 原来 18 */
+      line-height: 1.95;
+      max-width: 78ch;           /* 稍微更宽一点 */
+      margin-bottom: 18px;
+    }
+
+    /* 版心窄一点，留白更像截图 */
+    .wrap{
+      max-width: 940px;          /* 你之前 1180 偏宽，改窄更像学术站 */
+    }
+
+    /* About 两列间距更大，整体更“松” */
+    .about-2col{
+      gap: px;                 /* 原来 44 */
+      padding-top: 42px;         /* 上方留白 */
+      padding-bottom: 10px;
+    }
+
+    /* 右侧照片不必太大，稍微收敛 */
+    .about-photo{
+      border-radius: 16px;
+      box-shadow: 0 14px 42px rgba(0,0,0,.12);
+    }
+
+    /* section 的上下留白更大 */
+    .section{
+      padding: 42px 0 58px;      /* 原来 22/40 */
+    }
+
+    /* Projects 标题更轻 */
+    .section h2{
+      font-size: 14px;
+      letter-spacing: 1.8px;
+      margin-bottom: 16px;
+    }
+
+    /* Projects 卡片文字也更小更轻 */
+    .card-title{
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    .card-tags{
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* 联系方式更像截图：更紧凑一些 */
+    .contact-row{
+      gap: 14px;
+    }
+    .contact-item{
+      font-size: 15px;
+      opacity: .9;
+    }
+
+    /* 手机端标题再小一点 */
+    @media (max-width: 900px){
+      .wrap{ max-width: 940px; }
+      .about-name{ font-size: 38px; }
+    }
+
   </style>
 </head>
+
+
 <body>
-  <main class="card" aria-label="bio">
-    <h1>Yuhang Sun</h1>
-    <div class="sub">MSTI · University of Washington</div>
-    <p>
-      Biography — I am a first-year Master’s student at the University of Washington’s MSTI program, with a strong foundation in product and industrial design. I enjoy hands-on work, especially creating and testing design solutions that combine technology and user experience.”
-    </p>
 
-    <div class="btns">
-      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">View CV (PDF)</a>
-      <a class="btn ghost" href="resume.pdf" download>Download CV</a>
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="/">Yuhang</a>
+
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#prototypes">Prototypes</a>
+      </div>
+
+      <div class="nav-right">
+        <a class="btn" href="cv/CV YuhangSUN.pdf" target="_blank" rel="noreferrer">CV</a>
+
+        <!-- 🌗 白天/黑夜切换按钮 -->
+        <!--<button class="btn themebtn" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="theme-ico" id="themeIcon">🌙</span>
+          <span id="themeText">Dark</span>
+        </button>-->
+      </div>
     </div>
+  </div>
+</header>
 
-    <p class="sub">📮 sunyhg@uw.edu · 📱 (341) 688-5782</p>
-    <footer>© <span id="y"></span> Yuhang Sun</footer>
-  </main>
+<!-- About -->
+<section id="about" class="section">
+  <div class="wrap">
+    <div class="about-2col">
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-    // Optional: auto-open PDF when URL has ?open=1
-    if (new URLSearchParams(location.search).get('open') === '1') {
-      window.open('resume.pdf', '_blank');
-    }
-  </script>
+      <!-- 左侧：文字 -->
+      <div class="about-left">
+        <h1 class="about-name">Yuhang Sun</h1>
+        <div class="about-affil">University of Washington</div>
+
+        <p class="about-text">
+          My work focuses on how to use AI in a practical, human-centered way—especially for health
+          technologies. I design and prototype wearable systems (such as ECG monitoring) that turn 
+          raw physiological signals into information people can understand and act on. Technically, 
+          this involves building an end-to-end pipeline for real-time data acquisition, signal processing,
+          and lightweight model-based screening, then translating the output into simple, low-burden 
+          feedback. I evaluate reliability in realistic conditions (noise, motion artifacts, and false alarms) 
+          and iterate the design to improve trust, usability, and safety.
+        </p>
+
+        <!-- 联系方式（SVG 位置保留） -->
+        <div class="contact-row about-contact">
+          <!-- Email -->
+          <a class="contact-item" href="mailto:you@uw.edu">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </span>
+            <span><u>sunyhg(at)uw(dot)edu</u></span>
+          </a>
+
+          <!-- LinkedIn -->
+          <a class="contact-item" href="https://www.linkedin.com/in/xxx" target="_blank" rel="noreferrer">
+            <span class="ico" aria-hidden="true">
+              <!-- 可替换成你喜欢的 LinkedIn SVG 
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6.5 10v8" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M6.5 6.5v.2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M10.5 18v-5.1c0-1.7 1-2.7 2.4-2.7 1.4 0 2.1 1 2.1 2.7V18" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </span>
+            <span><u>LinkedIn</u></span>
+          </a>-->
+
+          <!-- Google Scholar 
+          <a class="contact-item" href="https://scholar.google.com/citations?user=XXXX" target="_blank" rel="noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 4 3 9l9 5 9-5-9-5Z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M7 12v5c0 1.7 10 1.7 10 0v-5" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </span>
+            <span><u>Google Scholar</u></span>
+          </a>-->
+
+          <!-- GitHub -->
+          <a class="contact-item" href="https://github.com/yhsunhelen" target="_blank" rel="noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M9 19c-4 1.2-4-2-5-2m10 4v-3c0-.8.3-1.2.7-1.6-2.4-.3-4.9-1.2-4.9-5.3 0-1.2.4-2.1 1.1-2.9-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 2.9 1.1.8-.2 1.6-.3 2.4-.3.8 0 1.6.1 2.4.3 2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.7 1.1 2.9 0 4.1-2.5 5-4.9 5.3.4.4.7 1 .7 2V21"
+                  stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span><u>GitHub</u></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 右侧：照片 -->
+      <div class="about-right">
+        <div class="about-photo">
+          <img src="assets/avatar.jpg" alt="portrait" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="section">
+  <div class="wrap">
+    <h2>Projects</h2>
+
+    <div class="grid">
+      <a class="card" href="projects/First/">
+        <div class="thumb">
+          <img src="projects/First/cover.png" alt="First cover" />
+        </div>
+        <div class="card-title">FIRST (2025)</div>
+        <p class="card-tags">Accessibility | Multisensory Learning | Prototype</p>
+      </a>
+
+      <a class="card" href="projects/SafeBeat/">
+        <div class="thumb">
+          <img src="projects/SafeBeat/cover.png" alt="SafeBeat cover" />
+        </div>
+        <div class="card-title">SafeBeat (2024)</div>
+        <p class="card-tags">Health Tech | ECG Signal Processing | ML Screening</p>
+      </a>
+
+      <a class="card" href="projects/GazeCook/">
+        <div class="thumb">
+          <img src="projects/GazeCook/cover.png" alt="GazeCook cover" />
+        </div>
+        <div class="card-title">GazeCook (2024)</div>
+        <p class="card-tags">Wellness Game | Webcam-based Interaction |</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- Prototypes -->
+<section id="prototypes" class="section">
+  <div class="wrap">
+    <h2>Prototypes</h2>
+<p style="margin: -6px 0 18px; color: var(--muted);">
+  Small interaction demos and quick experiments.
+</p>
+    <div class="grid">
+      <a class="card" href="prototypes/demo-a/">
+        <div class="thumb">
+          <img src="prototypes/demo-a/cover.png" alt="Demo A cover" />
+        </div>
+        <div class="card-title">Demo A</div>
+        <p class="card-tags">Experiment · Fabrication · 2025</p>
+      </a>
+
+      <!--<a class="card" href="prototypes/demo-b/">
+        <div class="thumb">
+          <img src="prototypes/demo-b/cover.jpg" alt="Demo B cover" />
+        </div>
+        <div class="card-title">Demo B</div>
+        <p class="card-tags">HCI · Prototype · 2025</p>
+      </a>
+
+      <a class="card" href="prototypes/demo-c/">
+        <div class="thumb">
+          <img src="prototypes/demo-c/cover.jpg" alt="Demo C cover" />
+        </div>
+        <div class="card-title">Demo C</div>
+        <p class="card-tags">Experiment · Motion · 2025</p>
+      </a>-->
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer CTA 
+<section class="footer-cta">
+  <div class="wrap">
+    <div class="big-icons">
+      <a class="big-ico" href="mailto:you@uw.edu" aria-label="Email">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 6h16v12H4V6Zm.9 1.4 7.1 5.2 7.1-5.2v9.2H4.9V7.4Z"></path>
+        </svg>
+      </a>
+
+      <a class="big-ico" href="https://github.com/你的用户名" target="_blank" rel="noreferrer" aria-label="GitHub">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 .9a11.1 11.1 0 0 0-3.5 21.6c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1.8 2.2 2.6 1.6.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C16.8 5.1 17.8 5.4 17.8 5.4c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.2c0 .4.2.7.8.6A11.1 11.1 0 0 0 12 .9Z"></path>
+        </svg>
+      </a>
+    </div>-->
+
+    <!--<p>Email is the best way to reach me.</p>-->
+  </div>
+</section>
+
+<div class="copyright-bar">
+  <div class="wrap">
+    <div>© <span id="y"></span> YuhangSUN.</div>
+    <div>
+      <a class="mutelink" href="cv/CV YuhangSUN.pdf" target="_blank" rel="noreferrer">CV.pdf</a>
+      &nbsp;·&nbsp;
+      <a class="mutelink" href="mailto:you@uw.edu">Contact</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 年份
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  const root = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+
+  function applyTheme(theme){
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    const isDark = theme === 'dark';
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
+    themeText.textContent = isDark ? 'Light' : 'Dark';
+  }
+
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light' || saved === 'dark'){
+    applyTheme(saved);
+  } else {
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'dark' : 'light');
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+</script>
+
 </body>
 </html>
-

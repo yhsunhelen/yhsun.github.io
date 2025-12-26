@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GazeCook — Technical Prototype</title>
+  <meta name="description" content="GazeCook: webcam-based eye interaction prototype. This page focuses on what was built and the technical pipeline." />
+
+  <!-- Single-file style (no need styles.css). If you prefer external CSS, move this <style> to styles.css -->
+  <!--<style>
+    :root{
+      --bg:#ffffff;
+      --panel:#f6f7fb;
+      --panel2:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:rgba(2,6,23,.10);
+
+      --accent:#65a30d;     /* 绿可以保留 */
+      --accent2:#0284c7;    /* 蓝 */
+      --pink:#db2777;
+
+      --shadow: 0 18px 40px rgba(2,6,23,.10);
+      --radius: 18px;
+      --max: 1120px;
+      --serif: ui-serif, Georgia, "Times New Roman", Times, serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      background:
+          radial-gradient(1200px 600px at 70% 0%, rgba(101,163,13,.10), transparent 55%),
+          radial-gradient(900px 500px at 15% 10%, rgba(219,39,119,.08), transparent 55%),
+          var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.65;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 22px; }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background: rgba(11,12,15,.70);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .home-link{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .home-link:hover{ border-color: rgba(183,255,60,.35); }
+
+    .nav{
+      display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .nav a{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+    }
+
+    /* Sections */
+    .section{ padding:56px 0; }
+    .divider{ border-bottom:1px solid var(--line); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 300px 1fr;
+      gap:28px;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .left h2{
+      font-family:var(--serif);
+      font-weight:700;
+      letter-spacing:.3px;
+      margin:0 0 8px;
+      font-size:34px;
+    }
+    .note{ color:var(--muted); margin:0; }
+
+    /* Hero */
+    .hero{ padding:48px 0 40px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:26px;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns:1fr; }
+    }
+    .eyebrow{
+      color:var(--muted);
+      margin:0 0 10px;
+      font-size:13px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+    }
+    h1{
+      font-family:var(--serif);
+      font-size:56px;
+      line-height:1.05;
+      margin:0 0 14px;
+    }
+    .subtitle{
+      margin:0 0 18px;
+      color:#d9deea;
+      font-size:16px;
+    }
+
+    .chips{ display:flex; flex-wrap:wrap; gap:10px; margin: 14px 0 20px; }
+    .chip{
+      font-size:12px;
+      color:rgba(255,255,255,.85);
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+    }
+    .chip.accent{ border-color: rgba(183,255,60,.35); }
+    .chip.pink{ border-color: rgba(255,77,166,.35); }
+
+    .panel{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel-inner{ padding:18px 18px; }
+
+    .meta{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .meta-row{
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      gap:14px;
+      border-top:1px solid var(--line);
+      padding-top:10px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .meta-row:first-child{ border-top:none; padding-top:0; }
+    .meta-row .k{ color:rgba(255,255,255,.70); }
+    .meta-row .v{ color:#dfe5f2; }
+
+    /* Figures & placeholders */
+    figure{ margin:0; }
+    .figure{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: rgba(255,255,255,.02);
+      box-shadow: var(--shadow);
+    }
+    .figure img{ width:100%; height:auto; display:block; }
+    figcaption{
+      padding:12px 14px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .cap{ color:rgba(255,255,255,.80); }
+
+    .ph{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 320px;
+      background:
+        radial-gradient(800px 400px at 20% 0%, rgba(125,211,252,.10), transparent 60%),
+        radial-gradient(800px 400px at 85% 15%, rgba(183,255,60,.10), transparent 60%),
+        rgba(255,255,255,.02);
+      color:rgba(255,255,255,.75);
+      text-align:center;
+      padding:28px;
+      border-bottom:1px solid var(--line);
+    }
+    .ph small{ color:var(--muted); display:block; margin-top:8px; }
+
+    /* Cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 800px){
+      .cards{ grid-template-columns:1fr; }
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      padding:14px 14px;
+    }
+    .card h3{
+      margin:0 0 6px;
+      font-size:15px;
+      letter-spacing:.2px;
+    }
+    .card p{ margin:0; color:var(--muted); font-size:14px; }
+
+    .list{ margin:10px 0 0; padding-left:18px; color:#dfe5f2; }
+    .list li{ margin:6px 0; }
+    .tight li{ margin:4px 0; }
+    .muted{ color:var(--muted); }
+
+    .callout{
+      margin-top:16px;
+      border:1px solid rgba(183,255,60,.25);
+      background: rgba(183,255,60,.06);
+      border-radius: 16px;
+      padding:14px 14px;
+    }
+    .callout-title{
+      margin:0 0 6px;
+      font-weight:700;
+      color:rgba(255,255,255,.90);
+    }
+    .details{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.02);
+      overflow:hidden;
+    }
+    .details summary{
+      cursor:pointer;
+      padding:12px 14px;
+      color:rgba(255,255,255,.88);
+      list-style:none;
+    }
+    .details summary::-webkit-details-marker{ display:none; }
+    .code{
+      margin:0;
+      padding:14px;
+      border-top:1px solid var(--line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      color:#e9ecf1;
+      overflow:auto;
+      background: rgba(0,0,0,.28);
+    }
+
+    /* Two-column figure grid */
+    .fig-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){
+      .fig-grid{ grid-template-columns:1fr; }
+    }
+
+    /* Footer */
+    .footer{
+      padding:30px 0 44px;
+      color:var(--muted);
+    }
+    .footer-inner{
+      display:flex; justify-content:space-between; align-items:center; gap:14px;
+      border-top:1px solid var(--line);
+      padding-top:18px;
+      font-size:14px;
+      flex-wrap:wrap;
+    }
+
+    /* Quick jump button */
+    .to-top{
+      position:fixed;
+      right:16px; bottom:16px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(17,19,26,.65);
+      backdrop-filter: blur(10px);
+      color:rgba(255,255,255,.88);
+      box-shadow: var(--shadow);
+      display:none;
+    }
+    .to-top.show{ display:inline-flex; }
+  </style>
+</head>
+... -->
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <!-- IMPORTANT: adjust this path if your folder depth changes -->
+      <a class="home-link" href="../../index.html">← Home</a>
+
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#what-built">What I Built</a>
+        <a href="#pipeline">CV Pipeline</a>
+        <a href="#signals">Signal Design</a>
+        <a href="#integration">Game Integration</a>
+        <a href="#validation">Validation</a>
+        <a href="#results">Outcome</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="hero" id="overview">
+      <div class="hero-grid">
+
+        <div>
+          <p class="eyebrow">Project · Computer Vision · Interactive Prototype</p>
+          <h1>GazeCook</h1>
+          <p class="subtitle">
+            A webcam-based eye interaction prototype that turns “eye yoga” into a cooking game.
+            This page focuses on the technical pipeline: eye feature tracking → robust mapping → interaction signals → gameplay control.
+          </p>
+
+          <div class="chips">
+            <span class="chip accent">Webcam CV</span>
+            <span class="chip">MATLAB</span>
+            <span class="chip">Unity Prototype</span>
+            <span class="chip pink">Interaction Mapping</span>
+          </div>
+
+          <div class="panel">
+            <div class="panel-inner">
+              <div class="meta">
+                <div class="meta-row">
+                  <div class="k">My role</div>
+                  <div class="v"><strong>Technical implementation</strong> (vision pipeline + interaction mapping) & prototype integration</div>
+                </div>
+                <div class="meta-row">
+                  <div class="k">Core value</div>
+                  <div class="v">Stable control + learnable eye-to-action rules</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO IMAGE PLACEHOLDER -->
+        <figure class="figure">
+
+          <img src="assets/Hero.png" alt="GazeCook cover visual." />
+          
+
+          <figcaption><span class="cap">Figure 1.</span> GazeCook cover visual (replace with your own image).</figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- WHAT I BUILT -->
+    <section class="section divider" id="what-built">
+      <div class="grid">
+        <div class="left">
+          <h2>What I Built</h2>
+          <p class="note">A compact summary of the technical deliverables.</p>
+        </div>
+
+        <div class="right">
+          <div class="cards">
+            <article class="card">
+              <h3>Webcam CV tracker</h3>
+              <p>Eye region localization + feature extraction to derive continuous eye motion signals.</p>
+              <ul class="list tight">
+                <li>Face/eye ROI selection</li>
+                <li>Pupil / boundary cues</li>
+                <li>Stability layer (smoothing + recovery)</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Interaction signals</h3>
+              <p>Turn raw tracking into reliable commands for gameplay.</p>
+              <ul class="list tight">
+                <li>Continuous: gaze movement → cursor / stirring direction</li>
+                <li>Discrete: blink counting → “confirm / cut / next”</li>
+                <li>State: eye-close → pause / timed step</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Calibration & mapping</h3>
+              <p>Coordinate mapping logic to match human perception & screen boundaries.</p>
+              <ul class="list tight">
+                <li>Normalization to screen size</li>
+                <li>Clamping & outlier suppression</li>
+                <li>Optional per-user calibration step</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Technical validation</h3>
+              <p>Stress tests: drift, false triggers, and usability of the step flow.</p>
+              <ul class="list tight">
+                <li>Tracking loss recovery</li>
+                <li>Debounce / cooldown for blink triggers</li>
+                <li>Storyboard prompts to reduce user confusion</li>
+              </ul>
+            </article>
+          </div>
+
+         <!--  <div class="callout">
+            <p class="callout-title">Why this is “technical”</p>
+            <p class="muted" style="margin:0">
+              The challenge is not just detecting eyes once, but making the interaction stable and learnable in real environments.
+              The page is organized around that: robustness + mapping + signal design + integration.
+            </p>
+          </div>-->
+        </div>
+      </div>
+    </section>
+
+    <!-- PIPELINE -->
+    <section class="section divider" id="pipeline">
+      <div class="grid">
+        <div class="left">
+          <h2>CV Pipeline</h2>
+          <p class="note">From webcam frames to usable eye coordinates.</p>
+        </div>
+
+        <div class="right">
+          <figure class="figure">
+            <img src="assets/8.png" alt="Technical test board." /> 
+            <figcaption><span class="cap">Figure 2.</span> Technical exploration board (replace with your own image).</figcaption>
+          </figure>
+
+          <div class="cards">
+            <article class="card">
+              <h3>1) ROI: face → eye region</h3>
+              <p>Reduce noise by cropping to stable regions; improves speed and reduces background interference.</p>
+              <ul class="list tight">
+                <li>Detect key facial landmarks</li>
+                <li>Compute eye bounding boxes</li>
+                <li>Track ROI between frames (optional)</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>2) Feature extraction</h3>
+              <p>Use eye boundary + pupil cues to estimate eye motion direction and magnitude.</p>
+              <ul class="list tight">
+                <li>Pupil center estimation</li>
+                <li>Boundary checks to prevent drift</li>
+                <li>Confidence score for “lost tracking”</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>3) Coordinate mapping</h3>
+              <p>Map eye coordinates into screen/game coordinates using normalization & boundary rules.</p>
+              <ul class="list tight">
+                <li>Normalize to screen width/height</li>
+                <li>Clamp to avoid overshoot</li>
+                <li>Dead-zone to reduce jitter</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>4) Robustness layer</h3>
+              <p>Make it usable: smooth jitter, recover after loss, stabilize across lighting changes.</p>
+              <ul class="list tight">
+                <li>Temporal smoothing (moving average / EMA)</li>
+                <li>Outlier rejection</li>
+                <li>Reacquire ROI when confidence drops</li>
+              </ul>
+            </article>
+          </div>
+
+             <!-- <details class="details">
+            <summary>Pipeline pseudo-logic (compact)</summary>
+            <pre class="code">frame = webcam.read()
+face  = detectFace(frame)
+eyes  = cropEyeROI(frame, face)
+
+feat  = extractEyeFeatures(eyes)     # pupil / boundary cues
+xy    = mapToScreen(feat)            # normalize + clamp
+xy    = stabilize(xy, last_xy)       # smooth + outliers + recovery
+
+signals = deriveSignals(feat)         # blink / eye-close / motion
+emitToGame(xy, signals)</pre>
+          </details>
+
+          <div class="callout">
+            <p class="callout-title">Key technical issue you solved</p>
+            <p class="muted" style="margin:0">
+              Lighting variation and head motion can shift pupil/boundary appearance and cause coordinate drift.
+              The robustness layer is what turns a “demo” into a controllable prototype.
+            </p>-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNAL DESIGN -->
+    <section class="section divider" id="signals">
+      <div class="grid">
+        <div class="left">
+          <h2>Signal Design</h2>
+          <p class="note">How eye actions become reliable game commands.</p>
+        </div>
+
+        <div class="right">
+          <div class="fig-grid">
+            <figure class="figure">
+               <img src="assets/7.png" alt="User flow and storyboard." /> 
+              <figcaption><span class="cap">Figure 3.</span> User flow & storyboard (replace with your own image).</figcaption>
+            </figure>
+
+            <figure class="figure">
+              <img src="assets/Node graphs.png" alt="Unity implementation board." /> 
+              <figcaption><span class="cap">Figure 4.</span> Unity gameplay modules (replace with your own image).</figcaption>
+            </figure>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <h3>Continuous: gaze motion</h3>
+              <p>Used for “cursor guidance” or continuous actions like stirring direction.</p>
+              <ul class="list tight">
+                <li>Stable even with small noise</li>
+                <li>Learnable by users quickly</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Discrete: blink counting</h3>
+              <p>Used as confirm / cut / next-step triggers.</p>
+              <ul class="list tight">
+                <li>Debounce + cooldown window</li>
+                <li>Count-based confirmation reduces false triggers</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>State: eye-close</h3>
+              <p>Used for pause / timer start (healthy break behavior).</p>
+              <ul class="list tight">
+                <li>Threshold duration</li>
+                <li>Safe: avoids accidental activation</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Feedback & guidance</h3>
+              <p>On-screen prompts reduce cognitive load and keep users on the intended exercise flow.</p>
+              <ul class="list tight">
+                <li>Progress indicator</li>
+                <li>Action tips (“blink to cut”, “close eyes to pause”)</li>
+              </ul>
+            </article>
+          </div>
+
+          <!--<details class="details">
+            <summary>Example rules (you can adjust numbers later)</summary>
+            <pre class="code"># eye-close (state)
+if eyeClosedDuration > T_close:
+    togglePauseOrStartTimer()
+
+# blink (discrete)
+if blinkDetected and (t - lastBlinkTime) > cooldown:
+    blinkCount += 1
+    if blinkCount == N_required:
+        triggerAction()
+        blinkCount = 0
+
+# gaze (continuous)
+cursorXY = smooth(mapToScreen(pupilXY))</pre>
+          </details>-->
+        </div>
+      </div>
+    </section>
+
+    <!-- INTEGRATION -->
+    <section class="section divider" id="integration">
+      <div class="grid">
+        <div class="left">
+          <h2>Game Integration</h2>
+          <p class="note">How signals control gameplay tasks (cut / grab / stir / boil).</p>
+        </div>
+
+        <div class="right">
+          <div class="cards">
+            <article class="card">
+              <h3>Command mapping</h3>
+              <p>Eye signals are mapped to cooking steps with clear boundaries.</p>
+              <ul class="list tight">
+                <li>Blink → cut / confirm / advance</li>
+                <li>Gaze motion → steer / stir direction</li>
+                <li>Eye-close → pause / simmer timer</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Signal bridge (fill yours)</h3>
+              <p>Replace this line with your actual integration method.</p>
+              <ul class="list tight">
+                <li><strong>[PLACEHOLDER]</strong> MATLAB → Unity bridge: (e.g., UDP / file / key events)</li>
+                <li>Low-latency: keep update loop stable</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Fail-safe behavior</h3>
+              <p>When tracking is lost, the game should not “spam” actions.</p>
+              <ul class="list tight">
+                <li>Freeze cursor on low confidence</li>
+                <li>Disable blink triggers until recovered</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Why step-based cooking works</h3>
+              <p>Cooking naturally forms discrete steps + clear feedback, perfect for eye-based interactions.</p>
+              <ul class="list tight">
+                <li>Easy to understand</li>
+                <li>Easy to validate success</li>
+              </ul>
+            </article>
+          </div>
+
+          <!-- <div class="callout">
+            <p class="callout-title">Tip</p>
+            <p class="muted" style="margin:0">
+             
+            </p>
+          </div>-->
+        </div>
+      </div>
+    </section>
+
+    <!-- VALIDATION -->
+    <section class="section divider" id="validation">
+      <div class="grid">
+        <div class="left">
+          <h2>Validation</h2>
+          <p class="note">What failed, what was fixed, and what improved.</p>
+        </div>
+
+        <div class="right">
+          <div class="cards">
+            <article class="card">
+              <h3>Stability under lighting</h3>
+              <p>Problem: drift and tracking loss when brightness changes.</p>
+              <ul class="list tight">
+                <li>Fix: feature fusion + smoothing + recovery</li>
+                <li>Outcome: fewer losses and smaller deviations</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Boundary & mapping correctness</h3>
+              <p>Problem: cursor movement limited or inconsistent with perception.</p>
+              <ul class="list tight">
+                <li>Fix: explicit screen size + normalization + clamp</li>
+                <li>Outcome: full usable interaction range</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>False trigger prevention</h3>
+              <p>Problem: blink triggers multiple actions unintentionally.</p>
+              <ul class="list tight">
+                <li>Fix: debounce + cooldown + count-based confirm</li>
+                <li>Outcome: predictable and learnable discrete actions</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Flow usability</h3>
+              <p>Goal: users follow steps without reading long text.</p>
+              <ul class="list tight">
+                <li>Storyboard prompts + progress indicator</li>
+                <li>Users can complete tasks with minimal instruction</li>
+              </ul>
+            </article>
+          </div>
+
+         <!-- <details class="details">
+            <summary>Add your quantitative numbers (optional)</summary>
+            <pre class="code"># Replace placeholders with your results if you have them
+Latency: [ xx ms ]
+Tracking loss rate: [ xx% ]
+Task success rate: [ xx% ]
+User completion time: [ xx s ]</pre>
+          </details>
+        </div>-->
+      </div>
+    </section>
+
+    <!-- OUTCOME -->
+    <section class="section divider" id="results">
+      <div class="grid">
+        <div class="left">
+          <h2>Final Outcome</h2>
+          <p class="note">What the prototype demonstrates.</p>
+        </div>
+
+        <div class="right">
+          <figure class="figure">
+            <img src="assets/Final outcome board.png" alt="Final outcome board." />
+            <figcaption><span class="cap">Figure 5.</span> Final prototype outcome (replace with your own image).</figcaption>
+          </figure>
+
+          <div class="cards">
+            <article class="card">
+              <h3>What is validated</h3>
+              <ul class="list tight">
+                <li>Webcam-based eye signals can drive interactive control</li>
+                <li>Continuous + discrete mapping improves learnability</li>
+                <li>Robustness logic is essential in real lighting</li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <h3>Next steps</h3>
+              <ul class="list tight">
+                <li>Per-user calibration (fast onboarding)</li>
+                <li>More robust blink / closure classification</li>
+                <li>Formal evaluation with metrics (latency/accuracy)</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© <span id="y"></span> YuhangSUN</div>
+        <div class="muted">GazeCook · Technical Prototype</div>
+      </div>
+    </footer>
+
+  </main>
+
+  <a class="to-top" href="#overview" id="toTop">↑ Top</a>
+
+  <script>
+    // year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // show/hide top button
+    const btn = document.getElementById("toTop");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 800) btn.classList.add("show");
+      else btn.classList.remove("show");
+    });
+  </script>
+</body>
+</html>

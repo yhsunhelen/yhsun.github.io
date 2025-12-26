@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phone Holder for GarageBand · Case Study</title>
+  <meta name="description" content="A 3D-printed physical key holder for playing GarageBand on a phone—mechanism exploration, conductive touch triggering, and medium-fidelity iteration." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="home-btn" href="../../index.html">← Home</a>
+      <a class="brand" href="#top" aria-label="Go to top">
+        <span class="dot"></span>
+        <span>Case Study</span>
+      </a>
+      <nav class="nav" aria-label="Section navigation">
+        <a href="#overview">Overview</a>
+        <a href="#decisions">Key Decisions</a>
+        <a href="#process">Process</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="kicker">3D Prototyping · Interaction · Product</p>
+          <h1>Phone Holder for GarageBand</h1>
+          <p class="lead">
+            A physical-key add-on for playing GarageBand piano on a phone—designed to bring
+            a more piano-like posture and press feedback to touch-screen performance.
+          </p>
+
+          <!--<div class="meta">
+            <div class="meta-item">
+              <div class="meta-label">Role</div>
+              <div class="meta-value">Solo · Concept → Mechanism tests → 3D-printed iterations</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Focus</div>
+              <div class="meta-value">Mechanisms · Conductive triggering · Return force · Assembly learning</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tools</div>
+              <div class="meta-value">Hand prototyping · 3D printing · Springs · Copper foil & conductive materials</div>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#process">View the process</a>
+            <a class="btn" href="#gallery">See images</a>
+          </div>-->
+        </div>
+
+        <figure class="hero-media">
+          <!-- Replace assets/hero.jpg with your best cover image -->
+          <img src="assets/hero.png" alt="Phone holder prototype with physical keys for triggering the on-screen piano." />
+          <figcaption>Cover image (replace with your high-resolution photo)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="section">
+      <div class="container">
+        <h2>Overview</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Problem</h3>
+            <p>Playing piano on a phone lacks the posture, press feel, and control of a real keyboard.</p>
+          </article>
+          <article class="card">
+            <h3>Goal</h3>
+            <p>Create a physical-key holder that reliably triggers the touch screen and provides a satisfying return feel.</p>
+          </article>
+          <article class="card">
+            <h3>Outcome</h3>
+            <p>Iterated from sketches to hand-built mechanisms to a 3D-printed medium-fidelity prototype, identifying key issues for the next version.</p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Portfolio one-liner</div>
+          <p>
+            Turned touch-screen tapping into a physical keypress using conductive triggering and spring return,
+            then used a medium-fidelity build to uncover coupling issues and define the next iteration.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY DECISIONS -->
+    <section id="decisions" class="section alt">
+      <div class="container">
+        <h2>Key Decisions</h2>
+
+        <div class="two-col">
+          <article class="panel">
+            <h3>Key mapping: not 1:1</h3>
+            <p>
+              A strict 1:1 mapping to on-screen keys would make the physical keys too narrow.
+              Using a pentatonic-inspired layout allows wider keys and better playability.
+            </p>
+          </article>
+
+          <article class="panel">
+            <h3>Mechanism selection</h3>
+            <p>
+              Explored bell-crank and push-slide-rail concepts; hands-on tests informed which approach
+              was more practical for buildability and motion clarity.
+            </p>
+          </article>
+
+          <article class="panel">
+            <h3>Touch triggering</h3>
+            <p>
+              Tested conductive materials (wire, wetted cord, felt, etc.) to trigger capacitive touch without direct finger contact.
+              Copper foil became the more controllable contact point in later builds.
+            </p>
+          </article>
+
+          <article class="panel">
+            <h3>Iteration driven by failure</h3>
+            <p>
+              Spring tilt, unstable linkages, and axis coupling were treated as signals—each issue led to
+              a structural redesign (spring anchoring, joint geometry, and axis strategy).
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="section">
+      <div class="container">
+        <h2>Process</h2>
+
+        <div class="timeline">
+          <div class="step">
+            <div class="step-badge">1</div>
+            <div class="step-body">
+              <h3>Sketching: form + motion</h3>
+              <p>
+                Sketched key layouts and motion paths in parallel, comparing mechanism options and planning
+                constraints for thickness, travel, and contact placement.
+              </p>
+              <div class="media-row">
+                <button class="thumb" data-full="assets/sketches.png" aria-label="Open sketches image">
+                  <img src="assets/sketches.png" alt="Early sketches exploring layout and mechanisms." />
+                </button>
+                <ul class="bullets">
+                  <li>Wider keys by avoiding strict 1:1 mapping</li>
+                  <li>Mechanism concepts prepared for physical validation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-badge">2</div>
+            <div class="step-body">
+              <h3>Hand-built tests: validate motion</h3>
+              <p>
+                Built simplified mechanism mockups to verify smooth motion and feasibility, then used quick volume models
+                to confirm overall size and phone fit.
+              </p>
+              <div class="media-row">
+                <button class="thumb" data-full="assets/hand-prototype.jpg" aria-label="Open hand prototype image">
+                  <img src="assets/hand-prototype.png" alt="Hand-built mechanism mockups and volume check models." />
+                </button>
+                <ul class="bullets">
+                  <li>Physical testing guided mechanism choice</li>
+                  <li>Volume checks ensured device fit and ergonomics</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-badge">3</div>
+            <div class="step-body">
+              <h3>3D-printed iterations: trigger + return + joints</h3>
+              <p>
+                Iterated on conductive touch triggering and spring return. Addressed spring misalignment and unreliable linkages
+                by refining anchor points and rebuilding joints for stability.
+              </p>
+              <div class="media-row">
+                <button class="thumb" data-full="assets/3d-prototype.jpg" aria-label="Open 3D prototype image">
+                  <img src="assets/3d-prototype.png" alt="3D-printed prototype details: spring return and conductive contact experiments." />
+                </button>
+                <ul class="bullets">
+                  <li>Conductive contact strategy matured</li>
+                  <li>Spring return tuned for consistent reset</li>
+                  <li>Joints redesigned for robustness</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-badge">4</div>
+            <div class="step-body">
+              <h3>Medium-fidelity build: integration learning</h3>
+              <p>
+                Assembled a medium-fidelity version (base + 7-key module). Used pivots and copper-foil tips for capacitive touch.
+                Discovered axis coupling: pressing one key could influence others—highlighting the next iteration focus.
+              </p>
+              <div class="media-row">
+                <button class="thumb" data-full="assets/medium-fidelity.jpg" aria-label="Open medium fidelity image">
+                  <img src="assets/medium-fidelity.png" alt="Medium-fidelity 7-key module with copper-foil touch points." />
+                </button>
+                <ul class="bullets">
+                  <li>Module assembly validated</li>
+                  <li>Copper foil improved touch consistency</li>
+                  <li>Axis coupling became a key next-step problem</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section alt">
+      <div class="container">
+        <h2>Gallery</h2>
+        <div class="gallery">
+          <button class="gitem" data-full="assets/hero.jpg"><img src="assets/1.png" alt="Cover demo" /></button>
+          <button class="gitem" data-full="assets/sketches.jpg"><img src="assets/2.png" alt="Sketches" /></button>
+          <button class="gitem" data-full="assets/hand-prototype.jpg"><img src="assets/3.png" alt="Hand-built prototypes" /></button>
+          <button class="gitem" data-full="assets/3d-prototype.jpg"><img src="assets/4.png" alt="3D printed iterations" /></button>
+          <button class="gitem" data-full="assets/medium-fidelity.jpg"><img src="assets/5.png" alt="Medium-fidelity prototype" /></button>
+          <button class="gitem" data-full="assets/final-collage.jpg"><img src="assets/6.png
+            " alt="Final collage" /></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© <span id="y"></span> YuhangSUN</div>
+      <div class="footer-links">
+        <a href="mailto:you@example.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lbClose" aria-label="Close">×</button>
+    <img id="lbImg" alt="" />
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

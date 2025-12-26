@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SafeBeat — ECG Monitoring Wearable (Project Page)</title>
+  <meta name="description" content="SafeBeat is an ECG monitoring wearable concept for older adults living alone—research-driven design, prototyping, and feedback iteration." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="wrap header-grid">
+      <a class="home-link" href="../../index.html">← Home</a>
+      <div>
+        <p class="eyebrow">Project</p>
+        <h1 class="title">SafeBeat</h1>
+        <p class="subtitle">
+          A research-driven ECG monitoring wearable concept for older adults living alone,
+          combining real-time sensing with approachable, low-burden feedback.
+        </p>
+      </div>
+
+      <aside class="meta">
+        <div class="meta-block">
+          <div class="meta-k">Type</div>
+          <div class="meta-v">Product Design · Healthcare · Wearable</div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-k">Core idea</div>
+          <div class="meta-v">Continuous ECG monitoring + simple, color-coded alerts</div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-k">Methods</div>
+          <div class="meta-v">User research · Persona · Concept iteration · Arduino demo · Feedback loop</div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-k">Deliverables</div>
+          <div class="meta-v">Design boards · Prototype flow · Scenario storyboard</div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO IMAGE -->
+    <figure class="figure figure-hero">
+      <img src="assets/safebeat-hero.jpg" alt="SafeBeat cover: wearable ECG concept for older adults with a calming visual language." />
+      <figcaption>
+        <span class="cap-label">Figure 1.</span>
+        SafeBeat — concept overview and positioning as a user-friendly ECG monitoring device for elderly individuals living alone.
+      </figcaption>
+    </figure>
+
+    <!-- ABSTRACT / CONTRIBUTION -->
+    <section class="section">
+      <div class="grid">
+        <div class="col-left">
+          <h2>Abstract</h2>
+        </div>
+        <div class="col-right prose">
+          <p>
+            SafeBeat explores how an ECG monitoring device can better fit the routines and constraints of older adults
+            who live independently and may experience chronic cardiovascular risk. The project emphasizes
+            <em>low-friction use</em>, <em>clear interpretation</em>, and <em>wearability over extended periods</em>.
+          </p>
+
+          <div class="callout">
+            <p class="callout-title">Design contribution</p>
+            <p>
+              Translating clinical-style monitoring into an everyday object by prioritizing portability, intuitive status signals,
+              and a feedback loop that reduces user burden while supporting timely attention to abnormal patterns.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section class="section section-divider">
+      <div class="grid">
+        <div class="col-left">
+          <h2>Context & Motivation</h2>
+          <p class="note">Problem framing and market landscape.</p>
+        </div>
+        <div class="col-right">
+          <figure class="figure">
+            <img src="assets/inspiration-background.jpg" alt="Inspiration and background board: cardiovascular context, typical symptoms, and existing solutions." />
+            <figcaption>
+              <span class="cap-label">Figure 2.</span>
+              Motivation, cardiovascular context, and a comparison of existing solutions (ECG, PPG, Holter) highlighting trade-offs in portability, usability, and interpretability.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <p>
+              The design direction is driven by the gap between “professional monitoring” and “everyday understanding.”
+              While existing technologies can measure heart activity, the experience often breaks down at
+              comprehension, day-to-day comfort, and sustained adoption—especially for users who may not self-identify as “tech users.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- USER RESEARCH -->
+    <section class="section section-divider">
+      <div class="grid">
+        <div class="col-left">
+          <h2>User Research</h2>
+          <p class="note">Interview synthesis, persona, and design insights.</p>
+        </div>
+
+        <div class="col-right">
+          <figure class="figure">
+            <img src="assets/user-research.jpg" alt="User research board: interview highlights, persona, daily timeline, and insights." />
+            <figcaption>
+              <span class="cap-label">Figure 3.</span>
+              Interview synthesis, persona (retired, 68), daily timeline and emotional journey, leading to requirements such as portability, easy operation, and legible data interpretation.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h3 class="h3">Key needs distilled</h3>
+            <ul class="list">
+              <li><strong>Low-burden monitoring:</strong> automatic, continuous data capture with minimal steps.</li>
+              <li><strong>Clarity over raw data:</strong> interpretation that feels actionable, not intimidating.</li>
+              <li><strong>Wear comfort:</strong> materials and form that remain comfortable during prolonged wear.</li>
+              <li><strong>Trust and reassurance:</strong> a device that reduces anxiety rather than amplifying it.</li>
+            </ul>
+
+            <h3 class="h3">Design principles</h3>
+            <ul class="list">
+              <li><strong>Portability:</strong> unobtrusive and easy to carry/wear in daily routines.</li>
+              <li><strong>Readable signals:</strong> simplified status cues (e.g., color states) to lower cognitive load.</li>
+              <li><strong>Gentle interaction:</strong> surfaces and edges that communicate safety and calm.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEPT DEVELOPMENT -->
+    <section class="section section-divider">
+      <div class="grid">
+        <div class="col-left">
+          <h2>Concept Development</h2>
+          <p class="note">Form exploration and interaction clarity.</p>
+        </div>
+
+        <div class="col-right">
+          <figure class="figure">
+            <img src="assets/concept-development.jpg" alt="Concept development board: form iterations, orientation cues, replaceable parts, and color light states." />
+            <figcaption>
+              <span class="cap-label">Figure 4.</span>
+              Shape iteration toward a more stable, wearable form; orientation cues; replaceable components; and color-coded states (green normal, orange attention, red warning).
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h3 class="h3">Interaction language</h3>
+            <p>
+              The concept favors an immediately understandable feedback system:
+              <strong>green</strong> indicates normal operation, <strong>orange</strong> requests attention, and <strong>red</strong> suggests rest or seeking guidance.
+              This supports quick comprehension without requiring the user to interpret clinical charts.
+            </p>
+
+            <h3 class="h3">Wearability decisions</h3>
+            <ul class="list">
+              <li><strong>Rounded, low-aggression form</strong> to enhance perceived safety.</li>
+              <li><strong>Directional affordances</strong> (surface details) to reduce “which way is up?” confusion.</li>
+              <li><strong>Replaceable contact parts</strong> to support hygiene and maintenance over time.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPLEMENTATION -->
+    <section class="section section-divider">
+      <div class="grid">
+        <div class="col-left">
+          <h2>Prototype & System</h2>
+          <p class="note">Signal pipeline and demo validation.</p>
+        </div>
+
+        <div class="col-right">
+          <figure class="figure">
+            <img src="assets/implementation-feedback.jpg" alt="Implementation board: ECG signal flow, AI training, Arduino demo, and user feedback issues and solutions." />
+            <figcaption>
+              <span class="cap-label">Figure 5.</span>
+              Implementation process: ECG signal reading, transmission, analysis module, demo validation, and user feedback-driven iteration.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h3 class="h3">System pipeline (conceptual)</h3>
+            <ol class="list">
+              <li>ECG signal acquisition via wearable contact/patch.</li>
+              <li>Real-time transmission to an analysis module.</li>
+              <li>Pattern analysis and status classification.</li>
+              <li>Simple alerts and guidance to reduce uncertainty.</li>
+            </ol>
+
+            <h3 class="h3">Feedback loop highlights</h3>
+            <ul class="list">
+              <li><strong>Issue:</strong> misjudgment of “normal” under automatic detection in some conditions.</li>
+              <li><strong>Response:</strong> improve interpretation by incorporating contextual data features.</li>
+              <li><strong>Issue:</strong> the patch may loosen during wear.</li>
+              <li><strong>Response:</strong> explore alternative fixation methods (e.g., armband) for stability.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ✅ NEW: SIGNAL PROCESSING & SOFTWARE (CHINESE) -->
+    <section class="section section-divider" id="signal">
+      <div class="grid">
+        <div class="col-left">
+          <h2>信号处理与软件程序</h2>
+          <p class="note">（中文）从原始ECG到“好/坏”提示的核心软件流程。</p>
+        </div>
+
+        <div class="col-right">
+          <!-- Placeholder figure 1 -->
+          <figure class="figure">
+            <img src="assets/signal-pipeline.jpg" alt="[占位图] 信号处理流程图：采集→预处理→R峰检测→特征→判别→提示" />
+            <figcaption>
+              <span class="cap-label">Figure 6.</span>
+              <strong>占位图：</strong>放一张你自己的“软件流程 / 信号处理管线”图（例如流程图、模块框图、或你作品集里相关截图拆出来）。
+              文件名建议：<code>assets/signal-pipeline.jpg</code>
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h3 class="h3">① 数据从哪里来：采集与同步（占位可替换）</h3>
+            <ul class="list">
+              <li><strong>输入：</strong>ECG模拟信号（电极/贴片/腕带）→ 前端放大与滤波 → ADC数字化。</li>
+              <li><strong>采样率建议：</strong>（占位）如 200–500 Hz；你实际用多少就填多少。</li>
+              <li><strong>传输方式：</strong>（占位）蓝牙/串口/本地存储；你实际方案写清楚即可。</li>
+            </ul>
+
+            <h3 class="h3">② 预处理：把“能用的心电”从噪声里提出来</h3>
+            <p>
+              这一段重点展示“你做了什么”，不需要写成论文。可以用 3–5 个小点解释你在程序里实现的处理步骤：
+            </p>
+            <ul class="list">
+              <li><strong>去基线漂移：</strong>（占位）高通滤波/滑动窗口减趋势（例如 0.5 Hz 附近）。</li>
+              <li><strong>去工频干扰：</strong>（占位）50/60 Hz 陷波（根据地区电网）。</li>
+              <li><strong>抑制肌电/运动伪影：</strong>（占位）带通（例如 0.5–40 Hz）或平滑策略。</li>
+              <li><strong>信号质量判断（可选）：</strong>（占位）用幅度、饱和、噪声能量等指标标记“低可信片段”。</li>
+            </ul>
+
+            <!-- Placeholder figure 2 -->
+            <figure class="figure">
+              <img src="assets/signal-before-after.jpg" alt="[占位图] 预处理前后对比：原始ECG vs 滤波后ECG" />
+              <figcaption>
+                <span class="cap-label">Figure 7.</span>
+                <strong>占位图：</strong>放“原始波形 vs 处理后波形”的对比图最有说服力。
+                文件名建议：<code>assets/signal-before-after.jpg</code>
+              </figcaption>
+            </figure>
+
+            <h3 class="h3">③ R峰检测与心率计算：从波形得到“可解释的数字”</h3>
+            <ul class="list">
+              <li><strong>R峰检测：</strong>（占位）可以写“基于阈值 + 导数/能量 + 不应期约束”的方法；或你用的现成算法（例如 Pan-Tompkins）也可以直说。</li>
+              <li><strong>心率：</strong>由 RR 间期得到 BPM，并做平滑（例如中值/滑动平均），避免抖动。</li>
+              <li><strong>异常提示的基础规则：</strong>（占位）如心动过缓/过速阈值，或连续异常段才触发提醒（减少误报）。</li>
+            </ul>
+
+            <h3 class="h3">④ “好 / 坏”怎么判断：规则基线 + 可训练模型（占位）</h3>
+            <p>
+              你之前问“是不是用训练集对比来判断好坏”，答案是：<strong>可以</strong>，而且更适合做成你要的“可训练判断”。
+              不过为了不“虚构你没做过的实现”，这里我给你两种写法，你按真实情况保留其一：
+            </p>
+            <ul class="list">
+              <li><strong>版本A（你做了训练）：</strong>（占位）用标注数据训练分类器（如 CNN/LSTM/传统ML），输出类别（正常/疑似异常/需复测），再映射到绿/橙/红。</li>
+              <li><strong>版本B（你暂时没做训练）：</strong>先用规则与特征做“可解释的初版”，并在未来工作写：后续将接入训练数据以提升个体化与鲁棒性。</li>
+            </ul>
+
+            <div class="callout">
+              <p class="callout-title">（占位）你可以放一句“我写了哪些软件模块”来强调 software program</p>
+              <p>
+                例如：<strong>串口/蓝牙数据接收</strong>、<strong>实时滤波与可视化</strong>、<strong>R峰检测</strong>、
+                <strong>心率/HRV指标计算</strong>、<strong>异常段标记</strong>、<strong>提示策略（绿/橙/红）</strong>、
+                <strong>导出数据/日志</strong>。<br/>
+                （把你真实写过的勾出来，删掉没做的。）
+              </p>
+            </div>
+
+            <!-- Placeholder figure 3 -->
+            <figure class="figure">
+              <img src="assets/software-screenshots.jpg" alt="[占位图] 软件截图/代码片段/界面：数据接收、实时曲线、报警逻辑等" />
+              <figcaption>
+                <span class="cap-label">Figure 8.</span>
+                <strong>占位图：</strong>放你软件程序相关截图：实时曲线界面、串口输出、处理模块结构、或关键代码片段（注意隐去敏感信息）。
+                文件名建议：<code>assets/software-screenshots.jpg</code>
+              </figcaption>
+            </figure>
+
+            <h3 class="h3">⑤ 输出：把复杂结果变成“低负担的提示”</h3>
+            <ul class="list">
+              <li><strong>状态映射：</strong>将算法输出映射为用户可理解的状态（绿/橙/红），并给出一句话建议（占位）。</li>
+              <li><strong>误报控制：</strong>（占位）使用“连续N秒异常才报警”“信号质量差则提示重新佩戴”等策略。</li>
+              <li><strong>记录与回看：</strong>（占位）保存关键时间戳/异常片段，便于用户或家属查看。</li>
+            </ul>
+
+            <p class="small">
+              备注：这一段是展示你“做了什么软件工作”的位置，不需要把前期调研铺满；
+              图6–8放上去以后，观感会非常像你参考的黑底论文式项目页那种“技术叙事”。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENARIO -->
+    <section class="section section-divider">
+      <div class="grid">
+        <div class="col-left">
+          <h2>Scenario & Future Work</h2>
+          <p class="note">Daily integration and next steps.</p>
+        </div>
+
+        <div class="col-right">
+          <figure class="figure">
+            <img src="assets/storyboard-scenario.jpg" alt="Storyboard and usage scenario board: morning sleep check, afternoon wearing, evening app tracking and family sharing, plus future plan." />
+            <figcaption>
+              <span class="cap-label">Figure 9.</span>
+              Storyboard and usage scenario: morning sleep check, daytime wearing, evening review and sharing; future plans include vibration alerts, model updates, and real-time computing.
+            </figcaption>
+          </figure>
+
+          <div class="prose">
+            <h3 class="h3">Future directions</h3>
+            <ul class="list">
+              <li><strong>Haptics:</strong> add vibration to reduce reliance on visual attention.</li>
+              <li><strong>Personalization:</strong> continuously adapt analysis to user-specific patterns.</li>
+              <li><strong>Latency:</strong> improve on-device or near-device computation for faster response.</li>
+            </ul>
+
+            <hr class="rule" />
+
+            <p class="small">
+              <strong>Note:</strong> This page is intentionally image-and-text only (no interactive components) to keep the presentation academic and readable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© <span id="y"></span> Your Name</div>
+        <div class="footer-right">SafeBeat · Project Page</div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
