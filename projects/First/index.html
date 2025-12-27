@@ -34,6 +34,8 @@
           <p class="subtitle">
             A multisensory educational system for visually impaired children. I focused on making the prototype work reliably:
             tangible modules are recognized by NFC, mapped to content, and played back with immediate audio feedback.
+            It also integrates a large language model to provide real-time, targeted Q&A, helping children get personalized 
+            answers to specific learning questions.
           </p>
 
           <div class="chips">
@@ -68,7 +70,7 @@
         <!-- HERO IMAGE -->
         <figure class="figure">
           <img src="assets/first-hero.png" alt="FIRST prototype overview." />
-          <figcaption><span class="cap">Figure 1.</span> FIRST prototype overview (replace with your image).</figcaption>
+          <figcaption><span class="cap">Figure.</span> FIRST prototype overview.</figcaption>
         </figure>
       </div>
     </section>
@@ -84,53 +86,55 @@
         <div class="right">
             <figure class="figure">
               <img src="assets/first-what-built.png" alt="FIRST prototype detail (NFC + audio module)" />
-              <figcaption><span class="cap">Figure.</span> Prototype detail (NFC reader + audio playback).</figcaption>
+              <figcaption><span class="cap">Figure.1 </span> Prototype detail (NFC reader + audio playback).</figcaption>
             </figure>
           <div class="cards">
+
             <article class="card">
-              <h3>NFC recognition loop</h3>
-              <p>PN532 reads tag UID, maps to content, triggers audio playback with stable repeat handling.</p>
+              <h3>Single-module feedback</h3>
+              <p>Child places one tangible module → the system recognizes it and responds immediately with audio guidance and evaluation.</p>
               <ul class="list tight">
-                <li>UID read + validity checks</li>
-                <li>Mapping table (UID → track/content)</li>
-                <li>Debounce / repeated-read protection</li>
+                <li>NFC reads UID → identifies the object (e.g., “apple”)</li>
+                <li>Plays instant feedback (“You found an apple!”)</li>
+                <li>Optional assessment prompt (“Is an apple a fruit?” / “What color is it?”)</li>
               </ul>
             </article>
 
             <article class="card">
-              <h3>Audio feedback module</h3>
-              <p>DFPlayer Mini plays local files with immediate confirmation and simple control logic.</p>
+              <h3>Multi-module understanding</h3>
+              <p>When multiple modules are placed, the system interprets the combined inputs as a richer learning context.</p>
               <ul class="list tight">
-                <li>Local audio content on SD card</li>
-                <li>Clear “confirm / prompt / next” sounds</li>
-                <li>Speaker output tuning for clarity</li>
+                <li>Reads a sequence / set of UIDs</li>
+                <li>Builds a structured input (objects + attributes + order)</li>
+                <li>Maintains stable interaction rules across different sets</li>
               </ul>
             </article>
 
             <article class="card">
-              <h3>Voice guidance slice</h3>
-              <p>Speech in → text → response → speech out (for caregiver guidance / assistance).</p>
+              <h3>LLM story generation</h3>
+              <p>The LLM uses the selected modules to generate a short, age-appropriate story—so limited modules can create many combinations.</p>
               <ul class="list tight">
-                <li>Wake / input → STT</li>
-                <li>Content selection / intent</li>
-                <li>TTS output</li>
+                <li>Modules → story “ingredients” (characters, places, actions)</li>
+                <li>Generates a coherent narrative with repetition-friendly language</li>
+                <li>Supports follow-up questions to extend the story</li>
               </ul>
             </article>
 
             <article class="card">
-              <h3>Interaction consistency</h3>
-              <p>Same physical rule across different content sets, so kids can learn once and reuse.</p>
+              <h3>Expandable learning loop</h3>
+              <p>After the story, the system asks targeted questions and adapts difficulty, encouraging active listening and recall.</p>
               <ul class="list tight">
-                <li>Stable module placement cues</li>
-                <li>Consistent audio confirmation</li>
-                <li>Expandable themed sets</li>
+                <li>Comprehension check (“What did the apple do in the story?”)</li>
+                <li>Personalized Q&A based on child’s responses</li>
+                <li>Same modules, more content via new prompts/themes</li>
               </ul>
             </article>
+
           </div>
 
           <div class="callout">
             <p class="muted" style="margin:0">
-              I turned a modular tactile concept into a working system: a child touches a module, the device recognizes it, and audio immediately guides what to do next.
+              Turning a modular tactile concept into a working system: a child touches a module, the device recognizes it, and audio immediately guides what to do next.
             </p>
           </div>
         </div>
@@ -153,7 +157,7 @@
 
           <figure class="figure">
             <img src="assets/first-diagram.png" alt="FIRST system flow diagram." />
-            <figcaption><span class="cap">Figure 2.</span> System flow diagram (replace with your image).</figcaption>
+            <figcaption><span class="cap">Figure 2.</span> System flow diagram.</figcaption>
           </figure>
         </div>
       </div>
@@ -169,7 +173,6 @@
         <div class="right">
           <p class="muted" style="margin-top:0">
             The prototype core is a tight loop: read UID, map to track, play audio, and avoid repeated triggers when the tag stays close.
-            (This is exactly the part that decides whether a demo feels “reliable” or “glitchy”.)
           </p>
 
           <pre class="code">loop:
@@ -179,18 +182,11 @@
       player.play(track)
       last_uid = uid</pre>
 
-          <details class="details">
-            <summary>Optional: voice guidance pseudo-flow (click to expand)</summary>
-            <pre class="code">wake → speech input
-speech → text (STT)
-text → intent / content selection
-response text → speech (TTS)
-audio out</pre>
-          </details>
+
 
           <figure class="figure">
             <img src="assets/first-prototype.png" alt="FIRST prototype detail." /> 
-            <figcaption><span class="cap">Figure 3.</span> Prototype detail (optional image).</figcaption>
+            <figcaption><span class="cap">Figure 3.</span> Prototype</figcaption>
           </figure>
         </div>
       </div>
@@ -216,7 +212,7 @@ audio out</pre>
           </div>
 
           <div class="callout">
-            <p class="callout-title">Next step (if needed)</p>
+            <p class="callout-title">Next step</p>
             <p class="muted" style="margin:0">
               Expand content sets and run short caregiver-assisted trials to evaluate learnability and error cases (mis-reads, repeated reads, guidance clarity).
             </p>
