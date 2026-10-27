@@ -1,273 +1,66 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SafeBeat — ECG Monitoring Wearable (Project Page)</title>
-  <meta name="description" content="SafeBeat is an ECG monitoring wearable concept for older adults living alone—design + prototyping + signal pipeline + evaluation." />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SafeBeat is a human-centered wearable ECG monitoring concept developed by Yuhang Sun.">
+  <title>SafeBeat — Yuhang Sun</title><link rel="stylesheet" href="../prototype.css">
 </head>
+<body class="safebeat">
+  <header class="site-header"><div class="site-header__inner">
+    <a class="home-link" href="../../index.html">← Yuhang Sun</a>
+    <nav class="site-nav" aria-label="Project navigation"><a href="#prototype">Prototype</a><a href="#system">System</a><a href="#outcome">Outcome</a></nav>
+  </div></header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Health Technology · Wearable Sensing</p><h1>SafeBeat</h1>
+      <p class="dek">A wearable ECG monitoring concept that translates continuous physiological signals into calm, interpretable feedback for older adults living alone.</p>
+      <dl class="project-meta">
+        <div><dt>Project focus</dt><dd>Human-centered monitoring, signal pipeline, feedback design</dd></div>
+        <div><dt>Methods</dt><dd>ECG acquisition, preprocessing, rhythm-screening prototype</dd></div>
+        <div><dt>Year</dt><dd>2024</dd></div>
+      </dl>
+    </section>
+    <figure class="hero-figure"><img src="assets/safebeat-hero.png" alt="SafeBeat wearable ECG patch concept with status lights and replaceable contact pads"><figcaption>Wearable concept with replaceable contact pads and simple device-level status feedback.</figcaption></figure>
 
-<body>
-    <header class="topbar">
-    <div class="wrap topbar-inner">
-        <a class="home-link" href="../../index.html">← Home</a>
-
-        <nav class="nav" aria-label="Top navigation">
-        <a href="#overview">Overview</a>
-        <a href="#what-built">What I Built</a>
-        <a href="#flow">System Flow</a>
-        <a href="#implementation">Implementation</a>
-        <a href="#outcome">Outcome</a>
-        </nav>
-    </div>
-    </header>
-
-  <header class="site-header">
-    <div class="wrap header-grid">
-
-
-      <div>
-        <p class="eyebrow">PROJECT · HEALTH TECH · SIGNAL COMPUTING</p>
-        <h1 class="title">SafeBeat</h1>
-        <p class="subtitle">
-          An ECG monitoring wearable concept for older adults living alone, emphasizing low-burden use,
-          interpretable feedback, and a prototype-ready software pipeline.
-        </p>
-        <div class="chips">
-            <span class="chip accent">ECG</span>
-            <span class="chip">Wearable</span>
-            <span class="chip">Health Tech</span>
-            <span class="chip">Signal Computing</span>
-            <span class="chip">MATLAB</span>
-            <span class="chip pink">Model Screening</span>
-        </div>
-      </div>
-
-      <aside class="meta">
-        <div class="meta-block">
-          <div class="meta-k">Type</div>
-          <div class="meta-v">Wearable · Health Tech · Signal Computing</div>
-        </div>
-        <div class="meta-block">
-          <div class="meta-k">Core question</div>
-          <div class="meta-v">How to translate continuous ECG into actionable, low-anxiety feedback?</div>
-        </div>
-        <div class="meta-block">
-          <div class="meta-k">Technical scope</div>
-          <div class="meta-v">Acquisition → preprocessing → feature extraction → classification → alert mapping</div>
-        </div>
-        <div class="meta-block">
-          <div class="meta-k">Deliverables</div>
-          <div class="meta-v">System spec · Signal pipeline · Prototype demo · Evaluation plan</div>
-        </div>
-      </aside>
-    </div>
-  </header>
-
-  <main class="wrap">
-  <div id="overview"></div>
-
-
-
-
-    <!-- ABSTRACT / CONTRIBUTIONS (TEXT-HEAVY, ACADEMIC) -->
-    <section class="section" id="what-built">
-      <div class="grid">
-        <div class="col-left">
-          <h2>Abstract</h2>
-        </div>
-        <div class="col-right prose">
-          <p>
-            SafeBeat investigates an ECG monitoring wearable designed for older adults living independently, where
-            adherence, comprehension, and comfort are as critical as measurement capability. The project frames ECG
-            monitoring as a human-centered sensing system: the device captures a continuous physiological signal, while
-            the software translates it into interpretable states intended to reduce cognitive burden and anxiety.
-          </p>
-
-          <div class="callout">
-            <p class="callout-title">Technical contributions</p>
-            <ul class="list">
-              <li><strong>Pipeline specification:</strong> a complete path from raw ECG to low-burden feedback (state + suggestion).</li>
-              <li><strong>Interpretation strategy:</strong> rule-based baseline + trainable model option; both mapped to a simple alert language.</li>
-              <li><strong>Evaluation plan:</strong> metrics focusing on false alarms, latency, and robustness under poor signal quality.</li>
-            </ul>
-          </div>
-
-              <figure class="figure figure-hero">
-                <img src="assets/product-logic.png" alt="Product operation logic diagram" />
-                <figcaption>
-                    <span class="cap-label">Figure 1.</span>
-                    SafeBeat concept positioning: continuous ECG monitoring with simplified, user-facing interpretation.
-                </figcaption>
-                </figure>
-
-        </div>
+    <section class="section" id="challenge">
+      <div class="section-intro"><div><span class="section-number">01</span><h2>Challenge</h2></div><div class="prose">
+        <p class="lead">Continuous sensing is only useful when people can understand the result without unnecessary alarm.</p>
+        <p>SafeBeat asks how a wearable system might detect rhythm changes while communicating uncertainty and signal quality in a form suitable for everyday use.</p>
+      </div></div>
+      <div class="principles">
+        <div class="principle"><h3>Low burden</h3><p>The wearable should require little setup during routine use.</p></div>
+        <div class="principle"><h3>Interpretable</h3><p>Status feedback should explain what the user can do next.</p></div>
+        <div class="principle"><h3>Trustworthy</h3><p>Motion, poor contact, and uncertain readings must be handled visibly.</p></div>
       </div>
     </section>
 
-    <!-- CONTEXT / REQUIREMENTS (NO BIG IMAGE) -->
-    <section class="section section-divider" id="flow">
-      <div class="grid">
-        <div class="col-left">
-          <h2>Context & Requirements</h2>
-          <p class="note">Problem framing and design constraints.</p>
-        </div>
-
-        <div class="col-right prose">
-          <p>
-            Clinical ECG monitoring tools often fail in everyday contexts due to friction (setup, comfort, interpretation),
-            which is amplified for older adults who may not identify as “tech users.” SafeBeat therefore treats interpretability
-            and sustained adoption as first-order design constraints.
-          </p>
-
-          <h3 class="h3">Requirements (distilled)</h3>
-          <ul class="list">
-            <li><strong>Low-burden use:</strong> minimal steps, continuous capture, and stable wearing.</li>
-            <li><strong>Interpretability:</strong> actionable states instead of raw charts; avoids medical intimidation.</li>
-            <li><strong>Robustness:</strong> tolerates motion artifacts and imperfect contact; includes signal quality handling.</li>
-            <li><strong>Trust:</strong> reduces anxiety by lowering false alarms and providing clear next-step guidance.</li>
-          </ul>
-
-          <h3 class="h3">Feedback language (mapping)</h3>
-          <div class="callout">
-            <p class="small" style="margin:0;">
-              <strong>Green</strong>: normal / stable · <strong>Orange</strong>: attention / re-check · <strong>Red</strong>: warning / rest & seek guidance
-              <span class="muted"> (final thresholds and triggering rules are software-controlled and evaluated).</span>
-            </p>
-          </div>
-        </div>
+    <section class="section" id="prototype">
+      <div class="section-intro"><div><span class="section-number">02</span><h2>Prototype</h2></div><div class="prose">
+        <p class="lead">The concept links a body-worn sensor, a signal-processing pipeline, and a restrained feedback language.</p>
+        <p>Green communicates a stable reading, orange requests a re-check, and red identifies a warning that should prompt rest and further guidance. The goal is to support an informed response rather than present a diagnosis.</p>
+      </div></div>
+      <div class="signal-list">
+        <div class="signal"><h3>Stable</h3><p>Continue normally while monitoring remains active.</p></div><div class="signal"><h3>Re-check</h3><p>Adjust contact or reduce movement before reading again.</p></div><div class="signal"><h3>Warning</h3><p>Pause activity and seek appropriate guidance.</p></div>
       </div>
     </section>
 
-    <!-- METHODS (TEXT-ONLY, ACADEMIC) -->
-    <section class="section section-divider" id="implementation">
-      <div class="grid">
-        <div class="col-left">
-          <h2>Method</h2>
-          <p class="note">How the concept was developed.</p>
-        </div>
-
-        <div class="col-right prose">
-          <h3 class="h3">Human-centered process (summary)</h3>
-          <ul class="list">
-            <li>User research synthesis → requirements and failure cases (comfort, comprehension, trust).</li>
-            <li>Form + interaction iterations toward a calm, low-aggression wearable.</li>
-            <li>Prototype system definition → signal pipeline → algorithmic interpretation → evaluation plan.</li>
-          </ul>
-
-          <h3 class="h3">Prototype scope (what is validated)</h3>
-          <ul class="list">
-            <li><strong>Data path:</strong> acquisition, transmission, and real-time visualization.</li>
-            <li><strong>Interpretation:</strong> baseline rules + optional trainable classifier; alert mapping to user states.</li>
-            <li><strong>Robustness:</strong> handling of low-quality signal segments and false alarm suppression.</li>
-          </ul>
-        </div>
+    <section class="section" id="system">
+      <div class="section-intro"><div><span class="section-number">03</span><h2>System flow</h2></div><div class="prose"><p class="lead">The pipeline separates raw acquisition from interpretation so that signal quality can be evaluated before status feedback is shown.</p></div></div>
+      <div class="workflow" aria-label="SafeBeat system workflow">
+        <div class="workflow-step"><span>01</span><strong>Acquire ECG signal</strong></div><div class="workflow-step"><span>02</span><strong>Check contact and preprocess</strong></div><div class="workflow-step"><span>03</span><strong>Extract rhythm features</strong></div><div class="workflow-step"><span>04</span><strong>Screen the current window</strong></div><div class="workflow-step"><span>05</span><strong>Map result to calm feedback</strong></div>
       </div>
+      <div class="figure-block"><figure class="wide-figure"><img src="assets/product-logic.png" alt="SafeBeat concept diagram from wearable ECG reading to data analysis and health status"></figure><figcaption>Early system concept connecting a wearable reading, a trained screening model, and user-facing status feedback.</figcaption></div>
     </section>
 
-    <!-- PROTOTYPE & SYSTEM (KEEP ONE KEY IMAGE) -->
-    <section class="section section-divider" id="outcome">
-      <div class="grid">
-        <div class="col-left">
-          <h2>Prototype & System</h2>
-          <p class="note">System pipeline and demo validation.</p>
-        </div>
-
-        <div class="col-right">
-          <!-- Keep one key image only -->
-          <figure class="figure">
-            <img src="assets/implementation-feedback.png" alt="Implementation board: ECG signal flow, analysis module, demo validation, and feedback iteration." />
-            <figcaption>
-              <span class="cap-label">Figure 2.</span>
-              Prototype overview: acquisition → transmission → analysis → feedback; plus iteration driven by failure cases.
-            </figcaption>
-          </figure>
-
-          <div class="prose">
-            <h3 class="h3">System pipeline (operational)</h3>
-            <ol class="list">
-              <li><strong>Acquisition:</strong> wearable contact/patch captures ECG</em>.</li>
-              <li><strong>Transmission:</strong> streamed to an analysis module via serial</em>.</li>
-              <li><strong>Processing:</strong> preprocessing → peak/feature extraction → classification.</li>
-              <li><strong>Feedback:</strong> state mapping (green/orange/red) + short guidance which is logging for review.</li>
-            </ol>
-          </div>
-        </div>
-      </div>
+    <section class="section" id="outcome">
+      <div class="section-intro"><div><span class="section-number">04</span><h2>Outcome &amp; limitations</h2></div><div class="prose">
+        <p class="lead">The project produced a wearable concept, an electronics demonstration, and a software pipeline for acquiring, visualizing, and screening ECG signals.</p>
+        <p>Future evaluation should measure false alarms, latency, motion artifacts, and usability with older adults. SafeBeat remains a design and engineering prototype; it has not been validated as a medical device.</p>
+      </div></div>
+      <div class="figure-block"><figure class="wide-figure"><img src="assets/implementation-feedback.png" alt="SafeBeat electronics, model training curves, ECG analysis interface, and wearable testing"></figure><figcaption>Prototype work spanning sensor electronics, signal analysis, model exploration, and wearable testing.</figcaption></div>
+      <p class="note"><strong>Scope note.</strong> The interface explores how to communicate a screening result. It does not provide a clinical diagnosis.</p>
     </section>
-
-<!-- SIGNAL PROCESSING & SOFTWARE (concise, implementation-aligned) -->
-<section class="section section-divider" id="signal">
-  <div class="grid">
-    <div class="col-left">
-      <h2>Signal Processing & Software</h2>
-      <p class="note">Prototype implementation: real-time acquisition, visualization, and model-based rhythm screening.</p>
-    </div>
-
-    <div class="col-right prose">
-      <p>
-        The software prototype validates an end-to-end ECG pipeline from streaming input to interpretable output.
-        It supports real-time data acquisition over a serial interface with frame synchronization and checksum validation,
-        parses incoming payloads into 16-bit ECG samples, and renders the waveform continuously for live monitoring.
-        For rhythm screening, a trained model (loaded from a <code>.mat</code> file) runs online inference on sliding windows:
-        instantaneous frequency (<code>instfreq</code>) and spectral entropy (<code>pentropy</code>) are extracted as a compact 2×T sequence feature,
-        then <code>minibatchpredict</code> produces class scores and a predicted label, visualized as a confidence bar for quick inspection.
-        The prototype also supports pausing/resuming the live stream and exporting recorded samples for offline review.
-      </p>
-
-      <div class="callout">
-        <p class="callout-title">Implemented (prototype-level)</p>
-        <p class="small" style="margin:0;">
-          Real-time acquisition · Real-time visualization · Model-based rhythm screening
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-    <!-- SCENARIO (KEEP ONE IMAGE) -->
-    <section class="section section-divider">
-      <div class="grid">
-        <div class="col-left">
-          <h2>Scenario & Future Work</h2>
-          <p class="note">Daily integration and next steps.</p>
-        </div>
-
-        <div class="col-right">
-          <figure class="figure">
-            <img src="assets/storyboard-scenario.png" alt="Storyboard scenario: daily use, review, sharing, and future plan." />
-            <figcaption>
-              <span class="cap-label">Figure 3.</span>
-              Scenario storyboard: daily integration, review, and sharing; future work focuses on personalization and reliability.
-            </figcaption>
-          </figure>
-
-          <div class="prose">
-            <h3 class="h3">Future directions</h3>
-            <ul class="list">
-              <li><strong>Haptics:</strong> vibration cues to reduce reliance on visual attention.</li>
-              <li><strong>Personalization:</strong> calibrate thresholds/model per user to reduce false alarms.</li>
-              <li><strong>On-device efficiency:</strong> lower-latency inference and power-aware computation.</li>
-            </ul>
-
-            <hr class="rule" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        <div>© <span id="y"></span> YuhangSUN</div>
-        <div class="footer-right">SafeBeat · Project Page</div>
-      </div>
-    </footer>
+    <div class="next-project"><span>Next prototype</span><a href="../GazeCook/">GazeCook →</a></div>
   </main>
-
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
