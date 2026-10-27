@@ -50,7 +50,7 @@ section:last-of-type{margin-bottom:0}
 .edu>span{font-size:11px;color:var(--muted);padding-top:3px}
 .edu p{font-size:13px;line-height:1.65;margin:0}
 .edu strong{font-weight:500}
-.edu .degree-note{font-size:11px;color:var(--muted)}
+.edu .degree-note{font-size:13px;color:var(--ink)}
 .service-list{font-size:13px;padding-left:17px;margin:0;line-height:1.8}
 .service-list li{margin-bottom:9px}
 .service-list strong{font-weight:500}
