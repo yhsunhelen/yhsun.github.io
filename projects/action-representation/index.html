@@ -37,9 +37,9 @@ footer{background:#edf2ee;color:#5f716d;border-top:1px solid var(--line);padding
 <div class="hero-art"><img src="homepage_two_comparisons.gif" alt="Paired 3D numerical fruit cutting animations showing a real blade path: equivalent rigid poses followed by thin versus thick peel, with physical comparisons." width="800" height="450"><div class="micro">Blender rendering of the archived geometry and recorded 40-point blade trajectory</div></div>
 </section>
 <section class="band"><div class="wrap bandgrid">
-<div class="stat"><strong>1.002 → 0.858</strong><small>World to body-relative prediction NRMSE at widest tested pose range · Fig. 3(a)</small></div>
+<div class="stat"><strong>1.002 → 0.858</strong><small>World to body-relative prediction NRMSE at the widest tested pose range</small></div>
 <div class="stat"><strong>1.721 mm</strong><small>Same local removal depth; different material consequences in the paired cutting scene</small></div>
-<div class="stat"><strong>0.389 vs 0.860</strong><small>Full physical state vs thickness-blind predictor NRMSE · Fig. 4(a)</small></div>
+<div class="stat"><strong>0.389 vs 0.860</strong><small>Full physical state vs thickness-blind predictor NRMSE</small></div>
 </div></section>
 <section class="wrap section" id="comparisons">
 <div class="eyebrow">The two controlled comparisons</div><h2>Watch the blade. Follow the result.</h2>
@@ -48,7 +48,7 @@ footer{background:#edf2ee;color:#5f716d;border-top:1px solid var(--line);padding
 <div class="movie"><img src="same_cut_two_poses.gif" width="800" height="450" loading="lazy" alt="Two fruits in different world poses with their blades following the same relative cutting stroke, yielding the same fruit-relative material removal."></div>
 <div class="study-copy"><div class="eyebrow">Comparison 01 / Spatial generalization</div><h3>Move fruit and blade together. Keep the same cut.</h3>
 <p>The two moving blades describe different world-space trajectories. Yet because each fruit and blade undergo the same rigid transformation together, their local cutting geometry and fruit-relative removal outcomes are identical.</p>
-<div class="evidence"><div class="n">World 1.002 | Body 0.858</div><div class="label">Five-seed mean NRMSE under broad global pose variation · Figure 3(a)</div></div>
+<div class="evidence"><div class="n">World 1.002 | Body 0.858</div><div class="label">Five-seed mean NRMSE under broad global pose variation</div></div>
 <div class="links"><a href="comparison_A_same_cut_two_poses.mp4" download>Download comparison MP4 ↗</a><a href="same_cut_two_poses.gif" download>Download GIF ↗</a></div></div>
 </article>
 <article class="study reverse">
@@ -70,7 +70,7 @@ footer{background:#edf2ee;color:#5f716d;border-top:1px solid var(--line);padding
 <article><small>Keep predictive information</small><h3>Geometry alone does not determine every outcome.</h3><p>Omitting peel thickness creates indistinguishable inputs with different consequences. This limitation concerns the combined state–action information, not the action vector alone.</p></article>
 <article><small>Verify learned consistency</small><h3>A correct coordinate transform does not guarantee a correct prediction.</h3><p>With the actual cutting interaction held fixed, perturbing the estimated local coordinate origin degrades the learned predictor. The effect is distinct from true execution error.</p></article></div>
 <div class="statement">A useful action representation makes equivalent physics reusable without hiding the physical differences that matter.</div></section>
-<div class="wrap provenance"><strong>NUMERICAL PROVENANCE</strong><p>The source fruit mesh, 40-sample cutting trajectory, finite blade width, surface frames and final removal-depth and peel-thickness fields come from the archived Figure 1 PeelWorld calculation. The 3D animation progressively reveals the frozen geometric-oracle removal field along the recorded path; it is a visualization of the modeled cutting sequence, not a time-resolved fracture, force-feedback or robot-hardware experiment. The Figure 3, Figure 4 and Figure 6 metrics use separate matched five-seed model experiments and must not be interpreted as measurements taken from the animated frames.</p></div>
+<div class="wrap provenance"><strong>NUMERICAL PROVENANCE</strong><p>The source fruit mesh, 40-sample cutting trajectory, finite blade width, surface frames and final removal-depth and peel-thickness fields come from the archived PeelWorld calculation. The 3D animation progressively reveals the frozen geometric-oracle removal field along the recorded path; it is a visualization of the modeled cutting sequence, not a time-resolved fracture, force-feedback or robot-hardware experiment. The summary metrics use separate matched five-seed model experiments and must not be interpreted as measurements taken from the animated frames.</p></div>
 </main>
 <footer><div class="wrap"><strong>Action Representation for Spatial Generalization in Robot World Models</strong><div>Research visualization · Controlled geometric peeling benchmark · <a href="../../index.html">Yuhang Sun</a></div></div></footer>
 </body></html>
