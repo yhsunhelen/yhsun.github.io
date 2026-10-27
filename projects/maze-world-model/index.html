@@ -4,107 +4,138 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Physical Experience Builds Continual Spatial World Models — Yuhang Sun</title>
-  <meta name="description" content="A dynamic-maze study of how accumulated physical experience supports transferable spatial prediction and earlier action.">
+  <meta name="description" content="A controlled dynamic-maze study of how accumulated physical experience supports transferable spatial prediction and anticipatory action.">
+  <meta property="og:title" content="Physical Experience Builds Continual Spatial World Models">
+  <meta property="og:description" content="Spatial Change Memory transfers relations learned across physical episodes to predict a withheld spatial change before direct observation.">
   <link rel="stylesheet" href="project.css">
   <script src="project.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="page">
-  <nav class="top-nav" aria-label="Project navigation">
-    <a href="../../index.html">← Yuhang Sun</a>
-    <div><a href="#overview">Overview</a><a href="#method">Method</a><a href="#evidence">Evidence</a><a href="#status">Status</a></div>
-  </nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <main id="main">
-    <header class="hero">
-      <p class="eyebrow">MazeWorldModel · NeurIPS 2026 Workshop on Continual World Models</p>
-      <h1>Physical Experience Builds<br class="desktop-break"> Continual Spatial World Models</h1>
-      <p class="author"><a href="../../index.html">Yuhang Sun</a></p>
-      <p class="affiliation">University of Washington</p>
-      <p class="lead">Can an agent use past physical encounters to predict a change before seeing it again?</p>
-      <p class="summary">This work separates reactive replanning from learning reusable structure. Spatial Change Memory accumulates relations among transitions across episodes, transfers them to a withheld location, and lets an agent revise its route before direct observation.</p>
-      <div class="resource-links"><a href="https://continual-world-models-workshop.github.io/">Workshop</a><a href="#evidence">Telemetry evidence</a><a href="#status">Publication status</a></div>
-    </header>
+<nav class="site-nav" aria-label="Project navigation">
+  <a class="home-link" href="../../index.html"><span aria-hidden="true">←</span> Yuhang Sun</a>
+  <div class="nav-links">
+    <a href="#abstract">Abstract</a>
+    <a href="#method">Method</a>
+    <a href="#results">Results</a>
+  </div>
+</nav>
 
-    <section class="teaser" aria-labelledby="teaser-caption">
-      <div class="animation-controls"><button type="button" data-animation-toggle>Pause animations</button></div>
-      <figure class="media-frame media-frame-wide">
-        <img src="assets/matched-rerun.gif" data-animated="assets/matched-rerun.gif" data-still="assets/matched-rerun-still.png" width="1000" height="563" alt="Side-by-side telemetry animation comparing Spatial Change Memory with a reactive policy in the same dynamic maze">
-        <figcaption id="teaser-caption"><strong>Matched telemetry rerun.</strong> The maze, seed, physics, intervention, and low-level controller are shared. Only the downstream prediction differs: SCM revises the route before direct target observation, while the reactive policy continues toward the obsolete target.</figcaption>
+<main id="main">
+  <header class="paper-header">
+    <p class="venue">NeurIPS 2026 Workshop on Continual World Models</p>
+    <h1>Physical Experience Builds<br>Continual Spatial World Models</h1>
+    <p class="authors"><a href="../../index.html">Yuhang Sun</a></p>
+    <p class="affiliation">University of Washington</p>
+    <div class="paper-links" aria-label="Project resources">
+      <span class="resource pending" aria-label="Paper forthcoming">Paper <small>forthcoming</small></span>
+      <span class="resource pending" aria-label="Code forthcoming">Code <small>forthcoming</small></span>
+      <a class="resource" href="https://continual-world-models-workshop.github.io/">Workshop <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <section class="teaser" aria-labelledby="teaser-caption">
+    <div class="animation-bar"><span>Matched physical rerun</span><button type="button" data-animation-toggle>Pause animations</button></div>
+    <figure>
+      <img src="assets/matched-rerun.gif" data-animated="assets/matched-rerun.gif" data-still="assets/matched-rerun-still.png" width="1000" height="563" alt="Side-by-side telemetry animation comparing Spatial Change Memory and a reactive policy in the same dynamic circular maze">
+      <figcaption id="teaser-caption"><strong>Same maze, seed, physics, intervention, and controller.</strong> Spatial Change Memory changes its route before direct observation of the downstream gate; the reactive policy continues toward the obsolete target until local evidence arrives.</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr" aria-label="Summary">
+    <div class="tldr-label">TL;DR</div>
+    <p>Repeated physical experience can support more than reactive replanning. By learning relations among spatial changes across episodes, an agent can transfer that structure to a withheld transition and act before the change becomes directly visible.</p>
+  </section>
+
+  <section id="abstract" class="content-section narrow">
+    <h2>Abstract</h2>
+    <p>Agents often adapt successfully to a changed environment while retaining little that helps with the next change. This work asks whether a compact memory of past physical encounters can support transferable spatial prediction. We study the question in a controlled circular maze whose gates change across episodes.</p>
+    <p>Spatial Change Memory (SCM) accumulates statistical relations between transitions, then uses an observed cue to revise belief about a different, not-yet-visible transition. A matched reactive policy updates only after local observation. The resulting difference is behavioral and measurable: SCM abandons an obsolete route earlier and completes the maze sooner in the representative telemetry rerun.</p>
+  </section>
+
+  <section id="method" class="content-section">
+    <div class="section-heading">
+      <p class="kicker">Method</p>
+      <h2>From local adaptation to transferable structure</h2>
+      <p>The design separates remembering a route from learning a relation that can be applied somewhere new.</p>
+    </div>
+
+    <figure class="paper-figure method-figure">
+      <img src="assets/method-overview.webp" width="1800" height="435" loading="lazy" alt="Conceptual overview of the circular maze, reactive replanning, learning transition relations from past episodes, and structured versus random change conditions">
+      <figcaption><strong>Experimental logic.</strong> The agent observes a current change and recomputes its route. SCM additionally pools transition relations across past episodes. When changes are structured, this memory should support prediction at a withheld transition; under random change, it should not provide an advantage.</figcaption>
+    </figure>
+
+    <div class="comparison" aria-label="Policy comparison">
+      <article>
+        <div class="comparison-title scm"><span></span>Spatial Change Memory</div>
+        <h3>Predict from accumulated relations</h3>
+        <p>Evidence gathered across episodes updates a shared model of how spatial transitions co-vary. A cue at one gate can therefore revise belief about a downstream gate before it enters the observation radius.</p>
+      </article>
+      <article>
+        <div class="comparison-title reactive"><span></span>Reactive baseline</div>
+        <h3>Revise after local observation</h3>
+        <p>The baseline shares the maze, controller, and current observations, but keeps pursuing its existing target until direct sensory evidence triggers a local map update.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="results" class="content-section results-section">
+    <div class="section-heading">
+      <p class="kicker">Representative result</p>
+      <h2>Prediction becomes visible in the trajectory</h2>
+      <p>Step-level telemetry links the policy update to realized plate motion and the agent's physical path.</p>
+    </div>
+
+    <div class="results-grid">
+      <div class="metric-table" role="table" aria-label="Representative matched-rerun metrics">
+        <div class="metric-row metric-head" role="row">
+          <span role="columnheader">Measure</span><span role="columnheader">Reactive</span><span role="columnheader">SCM</span>
+        </div>
+        <div class="metric-row" role="row">
+          <span role="rowheader">Obsolete-target persistence</span><strong role="cell">10.46 s</strong><strong role="cell">0.0083 s</strong>
+        </div>
+        <div class="metric-row" role="row">
+          <span role="rowheader">Completion time</span><strong role="cell">41.89 s</strong><strong role="cell">28.86 s</strong>
+        </div>
+        <div class="metric-callout">
+          <strong>17.81 s</strong>
+          <span>anticipatory lead before reactive observation</span>
+        </div>
+      </div>
+
+      <figure class="paper-figure trajectory-figure">
+        <img src="assets/maze-trajectory.gif" data-animated="assets/maze-trajectory.gif" data-still="assets/maze-trajectory-still.png" width="720" height="438" loading="lazy" alt="Animated top view of the agent moving through a changing circular maze with an inset showing the plate's three-dimensional orientation">
+        <figcaption><strong>True realized trajectory.</strong> The top view and three-dimensional inset are generated from logged physical telemetry rather than an idealized path.</figcaption>
       </figure>
-    </section>
+    </div>
+    <p class="result-note">The values above describe the representative matched rerun shown on this page. Aggregate statistics remain part of the frozen manuscript evaluation.</p>
+  </section>
 
-    <section id="overview">
-      <div class="section-label">01 · Motivation</div>
-      <h2>Replanning is not the same as learning</h2>
-      <p>An agent may successfully navigate around a newly blocked gate on every visit while learning nothing that helps predict the next blockage. The central question is whether repeated physical interaction can create reusable knowledge about how spatial changes are related.</p>
-      <aside class="question"><span>Research question</span><p>When a change is observed at one transition, can accumulated experience update belief about a different transition that is not yet visible?</p></aside>
-    </section>
+  <section class="content-section protocol-section">
+    <div class="section-heading compact">
+      <p class="kicker">Evaluation design</p>
+      <h2>What the experiment isolates</h2>
+    </div>
+    <dl class="protocol-list">
+      <div><dt>Withheld transition</dt><dd>Tests whether learned structure transfers beyond a response memorized at the test location.</dd></div>
+      <div><dt>Zero-information control</dt><dd>Checks that route changes depend on an informative cue rather than an automatic update.</dd></div>
+      <div><dt>Matched intervention</dt><dd>Holds the world, seed, physics, and low-level controller fixed while changing the downstream prediction.</dd></div>
+    </dl>
+  </section>
 
-    <section id="method">
-      <div class="section-label">02 · Method</div>
-      <h2>A controlled dynamic maze</h2>
-      <p>The environment is a simulated circular maze with changing gates. A held-out transition tests spatial transfer: the agent must use relations learned elsewhere rather than memorize a response at the test location.</p>
+  <section class="publication" id="publication">
+    <p class="kicker">Publication</p>
+    <h2>Accepted workshop paper</h2>
+    <p>Accepted at the <a href="https://continual-world-models-workshop.github.io/">NeurIPS 2026 Workshop on Continual World Models</a>.</p>
+    <p class="fine-print">The paper, citation, code, and benchmark materials will be linked here when they are publicly released.</p>
+  </section>
+</main>
 
-      <div class="policy-compare">
-        <article>
-          <p class="policy-name scm">Spatial Change Memory</p>
-          <h3>Accumulate relations across episodes</h3>
-          <p>SCM pools evidence about correlated spatial transitions. A cue at one gate can update belief about a downstream gate before that gate is directly observed.</p>
-        </article>
-        <article>
-          <p class="policy-name reactive">Reactive belief revision</p>
-          <h3>Update only after local observation</h3>
-          <p>The comparison policy uses the same physical world and controller, but retains its current target until direct sensory evidence forces a local update.</p>
-        </article>
-      </div>
-
-      <ol class="process" aria-label="Experimental sequence">
-        <li><span>Encounter</span>Observe physical changes while navigating.</li>
-        <li><span>Accumulate</span>Estimate relations among spatial transitions.</li>
-        <li><span>Transfer</span>Apply the learned relation at a withheld transition.</li>
-        <li><span>Act</span>Revise the route before direct observation.</li>
-      </ol>
-    </section>
-
-    <section id="evidence">
-      <div class="section-label">03 · Representative evidence</div>
-      <h2>Earlier prediction changes physical behavior</h2>
-      <p>The telemetry-enabled matched rerun records commanded and realized plate angles at every physics step. It connects the policy decision to actuator response and the resulting physical trajectory.</p>
-
-      <div class="metrics" aria-label="Representative matched-rerun metrics">
-        <div><strong>17.81 s</strong><span>anticipatory lead</span></div>
-        <div><strong>10.46 → 0.0083 s</strong><span>obsolete-target persistence</span></div>
-        <div><strong>41.89 → 28.86 s</strong><span>completion time</span></div>
-      </div>
-      <p class="metric-note">Values above describe the representative telemetry rerun shown here; aggregate statistics remain part of the frozen manuscript evaluation.</p>
-
-      <figure class="media-frame trajectory-figure">
-        <img src="assets/maze-trajectory.gif" data-animated="assets/maze-trajectory.gif" data-still="assets/maze-trajectory-still.png" width="720" height="438" loading="lazy" alt="Animated top view of the agent traversing concentric paths in a dynamically changing circular maze">
-        <figcaption><strong>True realized trajectory.</strong> The top view shows the agent moving through the changing concentric maze; the inset shows the plate's realized three-dimensional orientation. This animation is generated from logged physical telemetry.</figcaption>
-      </figure>
-    </section>
-
-    <section id="scope">
-      <div class="section-label">04 · Evaluation design</div>
-      <h2>Tests beyond a successful route</h2>
-      <div class="evaluation-grid">
-        <article><h3>Withheld transition</h3><p>Checks whether learned structure transfers to a spatial change that was not available during training.</p></article>
-        <article><h3>Zero-information control</h3><p>Separates genuine evidence-based updates from changes that could occur without an informative cue.</p></article>
-        <article><h3>Matched intervention</h3><p>Holds the world, seed, physics, and controller fixed so that behavior can be traced to the prediction difference.</p></article>
-      </div>
-    </section>
-
-    <section id="status" class="status-box">
-      <div class="section-label">05 · Publication</div>
-      <h2>Accepted workshop paper</h2>
-      <p>Accepted at the <a href="https://continual-world-models-workshop.github.io/">NeurIPS 2026 Workshop on Continual World Models</a>.</p>
-      <p class="small">The public paper, citation, code, and benchmark materials will be linked here after their official release.</p>
-    </section>
-  </main>
-
-  <footer><a href="../../index.html">Yuhang Sun</a><span>MazeWorldModel · October 2026</span><a href="#main">Back to top ↑</a></footer>
-</div>
+<footer>
+  <a href="../../index.html">Yuhang Sun</a>
+  <span>MazeWorldModel · 2026</span>
+  <a href="#main">Back to top ↑</a>
+</footer>
 </body>
 </html>
