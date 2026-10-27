@@ -1,0 +1,34 @@
+ACTION REPRESENTATION FOR SPATIAL GENERALIZATION IN ROBOT WORLD MODELS
+Homepage animations — concise scientific explanations
+
+MAIN TITLE
+Where a cut happens is not what makes it different.
+
+HERO SUMMARY
+Two synchronized blade actions reveal what a robot world model should recognize as equivalent, and what it must keep distinct. Moving fruit and blade together changes their world coordinates without changing the fruit-relative cut. Keeping the blade motion fixed while changing the peel thickness can expose flesh in one case and leave peel in another. A useful action representation should reuse the same physical interaction across space without erasing the state that determines the result.
+
+VIDEO A — Two world poses. One physical cut.
+The same recorded blade stroke is applied to the same fruit under two shared rigid poses. The paths look different in world coordinates, yet every blade–fruit relation and the resulting material-removal field remain identical in fruit coordinates. A five-seed prediction comparison at the largest tested pose range gives NRMSE 1.002 for world-relative and 0.858 for body-relative inputs (Figure 3a).
+
+VIDEO B — Same blade action. Different material outcomes.
+The blade follows an identical 40-point contact trajectory with the same removal-depth field on the same fruit geometry. Only the peel-thickness field changes. At one sampled mesh position, q = 1.7214 mm, thin peel h = 1.3616 mm, and thick peel h = 2.0424 mm. The first cut enters the flesh by 0.3598 mm, while the second leaves 0.3210 mm of peel. These are actual values from the frozen numerical oracle data rather than constructed demonstration numbers. The distinct prediction error for full versus thickness-blind input (NRMSE 0.3888 vs 0.8596 in Figure 4a) is a separate five-seed test showing why the thickness variable matters.
+
+FULL VIDEO — Conclusion
+Action coordinates matter because they determine which previous experiences can be reused in new spatial settings. This reuse is justified when the physical interaction is equivalent, but it cannot replace missing material information. Furthermore, even if the physics is unchanged, neural predictions may still respond to changes of the estimated coordinates. The conclusion concerns the joint state–action input and the trained predictor, not a claim that one coordinate frame is always optimal.
+
+PROVENANCE
+- Frozen data: D7920 F:\P30\Full\Src\F1\D\f5.npz (extracted fields) and Figures 3, 4, 6 archived CSV data.
+- Transfer SHA256 of extracted subset f5_source.npz:
+  3d36def94d54a1ba6c6297b3f3a0770f9e9fc41e78d44748a4cd9b13d79d0351
+- Saved action: original 40 samples of blade position, surface contact and local tangent/normal/binuormal orientation.
+- Nominal cutting width is taken from the corresponding F1 geometry metadata (approximately 9.35 mm).
+- The film animates the real final per-vertex oracle removal-depth field by progressively revealing it along the saved stroke. This is a didactic time ordering of a precomputed spatial field. It does NOT imply a new time-resolved force, fracture or closed-loop controller simulation.
+- The 3D strip material is colored as remaining peel when q<h, and exposed flesh when q>=h. This is a visualization of the stored physical-state field.
+- Figure 3/4/6 numerical panels come from the separately archived five-seed experiments, not from the animation frame sequence.
+- There are no claims of real robot hardware validation.
+
+PUBLICATION RECOMMENDATION
+Website hero: paired GIF (homepage_two_comparisons.gif)
+Supplementary film: robot_peel_comparisons_main.mp4
+Research gallery: comparison_A_same_cut_two_poses.mp4 and comparison_B_same_action_two_thicknesses.mp4
+Text: the HERO SUMMARY paragraph above.

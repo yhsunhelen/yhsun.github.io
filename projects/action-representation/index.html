@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12313a">
+<meta name="description" content="Source-grounded blade-and-fruit simulations compare identical actions across global poses and across peel thickness, with experimental results from robot world-model research.">
+<title>Action Representation for Spatial Generalization in Robot World Models — Yuhang Sun</title>
+<style>
+:root{--ink:#183238;--sub:#5d6d70;--bg:#fbfcfa;--card:#fff;--line:#d9e2dc;--sea:#14796f;--pale:#eef4f0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:15.5px/1.65 Arial,"Helvetica Neue",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;padding:0 30px;margin:auto}a{color:inherit}h1,h2,h3{margin-top:0;color:#173238}h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:600;letter-spacing:-.025em}h1{font-size:clamp(38px,4.2vw,58px);line-height:1.12;margin:14px 0 20px}h2{font-size:clamp(28px,2.9vw,39px);line-height:1.2;margin:10px 0 20px}h3{font-size:21px;line-height:1.35;letter-spacing:-.012em;margin:8px 0 12px}
+.top{display:flex;align-items:center;justify-content:space-between;min-height:70px;gap:24px;border-bottom:1px solid var(--line)}.top a{text-decoration:none}.logo{display:flex;align-items:center;gap:11px;font-size:12px;font-weight:700;letter-spacing:.035em}.square{font:600 20px Arial,sans-serif;color:var(--ink);background:transparent;width:30px;height:30px;display:grid;place-items:center;border:1px solid #9fb3aa;border-radius:3px}.nav{display:flex;gap:24px;color:var(--sub);font-size:12.5px;font-weight:600}.nav a:hover{color:var(--sea)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.105em;text-transform:uppercase;color:var(--sea)}.hero{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:46px;align-items:center;padding:58px 0 68px}
+.hero p{color:var(--sub);font-size:17px;line-height:1.72;max-width:520px}.buttons{display:flex;flex-wrap:wrap;gap:20px;margin-top:27px}.button{text-decoration:none;display:inline-block;color:var(--sea);background:transparent;padding:7px 0 5px;font-size:13.5px;font-weight:700;border:0;border-bottom:1px solid var(--sea);border-radius:0}.button.light{color:var(--ink);border-color:#879c94}.button:hover{color:#0c5d55;border-color:#0c5d55}
+.hero img,.study img{display:block;width:100%;height:auto;max-width:100%;aspect-ratio:16/9;object-fit:contain}.hero-art{min-width:0;padding:8px;background:#f0f4f1;border:1px solid var(--line);border-radius:5px;overflow:hidden}.hero-art img{border-radius:2px}.micro{font-size:11.5px;color:#647773;margin:9px 5px 1px}
+.band{background:#f1f5f2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)}.bandgrid{display:grid;grid-template-columns:repeat(3,1fr)}.stat{padding:22px 25px;border-right:1px solid var(--line)}.stat:first-child{padding-left:0}.stat:last-child{border:0}.stat strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:23px;line-height:1.35;font-weight:600;color:var(--sea)}.stat small{font-size:12px;color:var(--sub);line-height:1.5}
+.section{padding:70px 0}.intro{max-width:820px;color:var(--sub);font-size:16.5px;margin-bottom:29px}
+.study{margin-top:22px;display:grid;grid-template-columns:1fr .84fr;gap:29px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:5px;background:var(--card)}.study.reverse{grid-template-columns:.84fr 1fr}.study.reverse .movie{order:2}.study.reverse .study-copy{order:1}
+.study .movie{min-width:0;border-radius:3px;overflow:hidden;background:#edf3ed}.study .study-copy{padding:19px 22px}.study p{color:var(--sub);font-size:15px;margin:0 0 17px}.study .evidence{border-top:1px solid var(--line);padding-top:14px;margin-top:6px}.evidence .n{font-family:Georgia,"Times New Roman",serif;font-size:22px;font-weight:600;color:var(--sea)}.evidence .label{font-size:12px;color:var(--sub)}.links{display:flex;flex-wrap:wrap;gap:17px;font-size:12.5px;font-weight:600;margin-top:16px;color:var(--sea)}.links a{text-decoration:none;border-bottom:1px solid transparent}.links a:hover{border-color:currentColor}
+.film{background:#f3f6f3;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.filmwrap{padding:68px 0}.film video{width:100%;display:block;border-radius:4px;background:#e5ebe6;border:1px solid var(--line)}.film-meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--sub);font-size:12px;margin-top:13px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.trio article{padding:23px;background:#fff;border:1px solid var(--line);border-radius:4px}.trio small{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--sea)}.trio p{font-size:14px;color:var(--sub)}
+.statement{font:600 clamp(23px,2.3vw,32px)/1.35 Georgia,"Times New Roman",serif;letter-spacing:-.015em;padding:39px 0;max-width:930px}
+.provenance{padding:22px 25px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#f4f7f4;display:flex;gap:28px;align-items:flex-start;margin:0 0 68px}.provenance strong{font-size:10.5px;letter-spacing:.08em;color:var(--sea);min-width:130px}.provenance p{color:var(--sub);font-size:12.5px;margin:0}
+footer{background:#edf2ee;color:#5f716d;border-top:1px solid var(--line);padding:28px 0;font-size:12px}footer strong{color:var(--ink)}
+@media(max-width:920px){.hero,.study,.study.reverse{grid-template-columns:1fr}.study.reverse .movie,.study.reverse .study-copy{order:unset}.hero{padding:42px 0 52px}.bandgrid{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line);padding:17px 0}.trio{grid-template-columns:1fr}.nav{display:none}}
+@media(max-width:580px){.wrap{padding:0 18px}.section{padding:50px 0}.study .study-copy{padding:12px 7px}.study{gap:9px;padding:9px}.hero{gap:25px}.provenance{display:block}.provenance strong{display:block;margin-bottom:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="wrap top"><a class="logo" href="../../index.html"><span class="square">←</span><span>YUHANG SUN / ACTION REPRESENTATION</span></a><nav class="nav"><a href="#comparisons">Two comparisons</a><a href="#film">Research film</a><a href="#findings">Findings</a></nav></header>
+<main>
+<section class="wrap hero">
+<div><div class="eyebrow">Robot learning · Physics-guided representation</div><h1>Where a cut happens is not what makes it different.</h1>
+<p>Two synchronized blade actions reveal a deeper problem in robot world models. An identical physical interaction may look different in world coordinates, while the same motion can have different consequences when the material changes.</p>
+<div class="buttons"><a class="button" href="#comparisons">See the two comparisons</a><a class="button light" href="#film">Watch the research film</a></div></div>
+<div class="hero-art"><img src="homepage_two_comparisons.gif" alt="Paired 3D numerical fruit cutting animations showing a real blade path: equivalent rigid poses followed by thin versus thick peel, with physical comparisons." width="800" height="450"><div class="micro">Blender rendering of the archived geometry and recorded 40-point blade trajectory</div></div>
+</section>
+<section class="band"><div class="wrap bandgrid">
+<div class="stat"><strong>1.002 → 0.858</strong><small>World to body-relative prediction NRMSE at widest tested pose range · Fig. 3(a)</small></div>
+<div class="stat"><strong>1.721 mm</strong><small>Same local removal depth; different material consequences in the paired cutting scene</small></div>
+<div class="stat"><strong>0.389 vs 0.860</strong><small>Full physical state vs thickness-blind predictor NRMSE · Fig. 4(a)</small></div>
+</div></section>
+<section class="wrap section" id="comparisons">
+<div class="eyebrow">The two controlled comparisons</div><h2>Watch the blade. Follow the result.</h2>
+<p class="intro">Each animation starts with the same recorded finite-width cutting action. The knife is placed and oriented along the actual saved path, while the material-removal field is progressively revealed. The comparisons isolate what changes physically—and what changes only in its spatial description.</p>
+<article class="study">
+<div class="movie"><img src="same_cut_two_poses.gif" width="800" height="450" loading="lazy" alt="Two fruits in different world poses with their blades following the same relative cutting stroke, yielding the same fruit-relative material removal."></div>
+<div class="study-copy"><div class="eyebrow">Comparison 01 / Spatial generalization</div><h3>Move fruit and blade together. Keep the same cut.</h3>
+<p>The two moving blades describe different world-space trajectories. Yet because each fruit and blade undergo the same rigid transformation together, their local cutting geometry and fruit-relative removal outcomes are identical.</p>
+<div class="evidence"><div class="n">World 1.002 | Body 0.858</div><div class="label">Five-seed mean NRMSE under broad global pose variation · Figure 3(a)</div></div>
+<div class="links"><a href="comparison_A_same_cut_two_poses.mp4" download>Download comparison MP4 ↗</a><a href="same_cut_two_poses.gif" download>Download GIF ↗</a></div></div>
+</article>
+<article class="study reverse">
+<div class="movie"><img src="same_action_different_outcomes.gif" width="800" height="450" loading="lazy" alt="Two blades traverse the identical surface trajectory on geometrically identical fruits, one thin and one thick peel. Physical depth q penetrates thin peel while residual peel remains in thick fruit."></div>
+<div class="study-copy"><div class="eyebrow">Comparison 02 / Information needed for prediction</div><h3>Keep the same blade motion. Change the peel thickness.</h3>
+<p>The geometric path and removal depth are identical in both scenes. At one sampled contact location, the recorded depth is <strong>1.721 mm</strong>, the thin peel measures <strong>1.362 mm</strong>, and the thick peel measures <strong>2.042 mm</strong>. Thus one cut exposes flesh while the other leaves residual peel.</p>
+<div class="evidence"><div class="n">0.360 mm flesh | 0.321 mm peel</div><div class="label">Local consequence at the selected numerical sample, computed as |q − h|</div></div>
+<div class="links"><a href="comparison_B_same_action_two_thicknesses.mp4" download>Download comparison MP4 ↗</a><a href="same_action_different_outcomes.gif" download>Download GIF ↗</a></div></div>
+</article></section>
+<section class="film" id="film"><div class="wrap filmwrap">
+<div class="eyebrow">One coherent explanation</div><h2>See how actions are represented—and why it matters.</h2>
+<p class="intro">The full film shows both moving-blade comparisons and connects them to the manuscript's predictions and decision results. All displayed numerical comparisons come from the archived experiment tables.</p>
+<video controls playsinline preload="metadata" poster="compare_pose_still.png" aria-label="Blender numerical movie of synchronized blade cutting across global poses and peel thickness, with source-grounded figures">
+<source src="robot_peel_comparisons_main.mp4" type="video/mp4">Your browser does not support this video. <a href="robot_peel_comparisons_main.mp4">Open MP4</a>.</video>
+<div class="film-meta"><span>38 seconds · 1280 × 720 · H.264 · Silent research subtitles</span><span><a href="robot_peel_comparisons_main.mp4" download>Download full video ↓</a></span></div>
+</div></section>
+<section class="wrap section" id="findings"><div class="eyebrow">From experimental contrasts to general principles</div><h2>What the moving blade reveals about learning.</h2>
+<div class="trio"><article><small>Reuse physical regularities</small><h3>Position changes should not force relearning.</h3><p>Body-relative inputs reduce redundant variation when the same interaction moves to a new world pose. Surface-relative inputs help across equivalent contact locations.</p></article>
+<article><small>Keep predictive information</small><h3>Geometry alone does not determine every outcome.</h3><p>Omitting peel thickness creates indistinguishable inputs with different consequences. This limitation concerns the combined state–action information, not the action vector alone.</p></article>
+<article><small>Verify learned consistency</small><h3>A correct coordinate transform does not guarantee a correct prediction.</h3><p>With the actual cutting interaction held fixed, perturbing the estimated local coordinate origin degrades the learned predictor. The effect is distinct from true execution error.</p></article></div>
+<div class="statement">A useful action representation makes equivalent physics reusable without hiding the physical differences that matter.</div></section>
+<div class="wrap provenance"><strong>NUMERICAL PROVENANCE</strong><p>The source fruit mesh, 40-sample cutting trajectory, finite blade width, surface frames and final removal-depth and peel-thickness fields come from the archived Figure 1 PeelWorld calculation. The 3D animation progressively reveals the frozen geometric-oracle removal field along the recorded path; it is a visualization of the modeled cutting sequence, not a time-resolved fracture, force-feedback or robot-hardware experiment. The Figure 3, Figure 4 and Figure 6 metrics use separate matched five-seed model experiments and must not be interpreted as measurements taken from the animated frames.</p></div>
+</main>
+<footer><div class="wrap"><strong>Action Representation for Spatial Generalization in Robot World Models</strong><div>Research visualization · Controlled geometric peeling benchmark · <a href="../../index.html">Yuhang Sun</a></div></div></footer>
+</body></html>
