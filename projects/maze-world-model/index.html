@@ -4,107 +4,99 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Physical Experience Builds Continual Spatial World Models — Yuhang Sun</title>
-  <meta name="description" content="A dynamic-maze study of how accumulated physical experience supports transferable spatial prediction and earlier action.">
+  <meta name="description" content="A controlled dynamic-maze study of how accumulated physical experience supports transferable spatial prediction and anticipatory action.">
   <link rel="stylesheet" href="project.css">
   <script src="project.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="page">
-  <nav class="top-nav" aria-label="Project navigation">
-    <a href="../../index.html">← Yuhang Sun</a>
-    <div><a href="#overview">Overview</a><a href="#method">Method</a><a href="#evidence">Evidence</a><a href="#status">Status</a></div>
-  </nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <main id="main">
-    <header class="hero">
-      <p class="eyebrow">MazeWorldModel · NeurIPS 2026 Workshop on Continual World Models</p>
-      <h1>Physical Experience Builds<br class="desktop-break"> Continual Spatial World Models</h1>
-      <p class="author"><a href="../../index.html">Yuhang Sun</a></p>
-      <p class="affiliation">University of Washington</p>
-      <p class="lead">Can an agent use past physical encounters to predict a change before seeing it again?</p>
-      <p class="summary">This work separates reactive replanning from learning reusable structure. Spatial Change Memory accumulates relations among transitions across episodes, transfers them to a withheld location, and lets an agent revise its route before direct observation.</p>
-      <div class="resource-links"><a href="https://continual-world-models-workshop.github.io/">Workshop</a><a href="#evidence">Telemetry evidence</a><a href="#status">Publication status</a></div>
-    </header>
+<nav aria-label="Project navigation">
+  <a href="../../index.html">← Yuhang Sun</a>
+  <div><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a></div>
+</nav>
 
-    <section class="teaser" aria-labelledby="teaser-caption">
-      <div class="animation-controls"><button type="button" data-animation-toggle>Pause animations</button></div>
-      <figure class="media-frame media-frame-wide">
-        <img src="assets/matched-rerun.gif" data-animated="assets/matched-rerun.gif" data-still="assets/matched-rerun-still.png" width="1000" height="563" alt="Side-by-side telemetry animation comparing Spatial Change Memory with a reactive policy in the same dynamic maze">
-        <figcaption id="teaser-caption"><strong>Matched telemetry rerun.</strong> The maze, seed, physics, intervention, and low-level controller are shared. Only the downstream prediction differs: SCM revises the route before direct target observation, while the reactive policy continues toward the obsolete target.</figcaption>
-      </figure>
-    </section>
+<main id="main">
+  <header>
+    <p class="venue">NeurIPS 2026 Workshop on Continual World Models</p>
+    <h1>Physical Experience Builds Continual Spatial World Models</h1>
+    <p class="authors"><a href="../../index.html">Yuhang Sun</a></p>
+    <p class="affiliation">University of Washington</p>
+    <p class="resources"><span>Paper forthcoming</span><span>Code forthcoming</span><a href="https://continual-world-models-workshop.github.io/">Workshop ↗</a></p>
+  </header>
 
-    <section id="overview">
-      <div class="section-label">01 · Motivation</div>
-      <h2>Replanning is not the same as learning</h2>
-      <p>An agent may successfully navigate around a newly blocked gate on every visit while learning nothing that helps predict the next blockage. The central question is whether repeated physical interaction can create reusable knowledge about how spatial changes are related.</p>
-      <aside class="question"><span>Research question</span><p>When a change is observed at one transition, can accumulated experience update belief about a different transition that is not yet visible?</p></aside>
-    </section>
+  <section class="thesis" aria-labelledby="thesis-title">
+    <h2 id="thesis-title">A world model should predict change, not merely remember paths.</h2>
+    <p>Physical experience can turn recurring spatial changes into reusable predictions—allowing an agent to act before a change becomes directly observable, while remaining correctable by physical feedback.</p>
+  </section>
 
-    <section id="method">
-      <div class="section-label">02 · Method</div>
-      <h2>A controlled dynamic maze</h2>
-      <p>The environment is a simulated circular maze with changing gates. A held-out transition tests spatial transfer: the agent must use relations learned elsewhere rather than memorize a response at the test location.</p>
+  <div class="animation-control"><button type="button" data-animation-toggle>Pause animations</button></div>
 
-      <div class="policy-compare">
-        <article>
-          <p class="policy-name scm">Spatial Change Memory</p>
-          <h3>Accumulate relations across episodes</h3>
-          <p>SCM pools evidence about correlated spatial transitions. A cue at one gate can update belief about a downstream gate before that gate is directly observed.</p>
-        </article>
-        <article>
-          <p class="policy-name reactive">Reactive belief revision</p>
-          <h3>Update only after local observation</h3>
-          <p>The comparison policy uses the same physical world and controller, but retains its current target until direct sensory evidence forces a local update.</p>
-        </article>
-      </div>
+  <figure class="story-figure">
+    <img src="assets/spatial-memory-anticipates.gif" data-animated="assets/spatial-memory-anticipates.gif" data-still="assets/spatial-memory-anticipates-still.webp" width="1280" height="720" alt="Matched dynamic maze comparison in which Spatial Change Memory anticipates a closure while a reactive agent follows an obsolete route">
+    <figcaption>
+      <h3>Experience becomes anticipation</h3>
+      <p>In a matched run, Spatial Change Memory anticipates a downstream closure <strong>17.81 s before direct observation</strong>, nearly eliminates pursuit of an obsolete route (<strong>10.46 → 0.0083 s</strong>), and finishes sooner (<strong>41.89 → 28.86 s</strong>). The gain is prediction learned from experience rather than a faster reaction.</p>
+    </figcaption>
+  </figure>
 
-      <ol class="process" aria-label="Experimental sequence">
-        <li><span>Encounter</span>Observe physical changes while navigating.</li>
-        <li><span>Accumulate</span>Estimate relations among spatial transitions.</li>
-        <li><span>Transfer</span>Apply the learned relation at a withheld transition.</li>
-        <li><span>Act</span>Revise the route before direct observation.</li>
-      </ol>
-    </section>
+  <figure class="story-figure">
+    <img src="assets/physics-grounded-recovery.gif" data-animated="assets/physics-grounded-recovery.gif" data-still="assets/physics-grounded-recovery-still.webp" width="960" height="584" loading="lazy" alt="Physics-grounded circular maze showing ball motion, gate-triggered replanning, realized plate tilt, and navigation recovery">
+    <figcaption>
+      <h3>Planning meets physics</h3>
+      <p>A changing maze exposes the gap between planned motion and physical consequences. The animation shows gate-triggered replanning, realized plate tilt, obstacle interaction, and navigation recovery under the same dynamics.</p>
+    </figcaption>
+  </figure>
 
-    <section id="evidence">
-      <div class="section-label">03 · Representative evidence</div>
-      <h2>Earlier prediction changes physical behavior</h2>
-      <p>The telemetry-enabled matched rerun records commanded and realized plate angles at every physics step. It connects the policy decision to actuator response and the resulting physical trajectory.</p>
+  <section id="overview" class="text-section">
+    <h2>Overview</h2>
+    <p>Agents can repeatedly adapt to a changed environment while retaining little that helps with the next change. This work asks whether accumulated physical experience can support transferable spatial prediction in a circular maze whose gates change across episodes.</p>
+    <p>Spatial Change Memory (SCM) learns statistical relations between transitions and uses an observed cue to revise belief about a different, not-yet-visible transition. A matched reactive policy updates only after local observation.</p>
+  </section>
 
-      <div class="metrics" aria-label="Representative matched-rerun metrics">
-        <div><strong>17.81 s</strong><span>anticipatory lead</span></div>
-        <div><strong>10.46 → 0.0083 s</strong><span>obsolete-target persistence</span></div>
-        <div><strong>41.89 → 28.86 s</strong><span>completion time</span></div>
-      </div>
-      <p class="metric-note">Values above describe the representative telemetry rerun shown here; aggregate statistics remain part of the frozen manuscript evaluation.</p>
+  <section id="method">
+    <h2>Method</h2>
+    <p class="section-lead">A held-out transition tests whether knowledge transfers beyond a response memorized at the evaluation location.</p>
 
-      <figure class="media-frame trajectory-figure">
-        <img src="assets/maze-trajectory.gif" data-animated="assets/maze-trajectory.gif" data-still="assets/maze-trajectory-still.png" width="720" height="438" loading="lazy" alt="Animated top view of the agent traversing concentric paths in a dynamically changing circular maze">
-        <figcaption><strong>True realized trajectory.</strong> The top view shows the agent moving through the changing concentric maze; the inset shows the plate's realized three-dimensional orientation. This animation is generated from logged physical telemetry.</figcaption>
-      </figure>
-    </section>
+    <figure class="paper-figure">
+      <img src="assets/method-overview.webp" width="1800" height="435" loading="lazy" alt="Overview of the circular maze, reactive replanning, learning transition relations from past episodes, and structured versus random change conditions">
+      <figcaption><strong>Experimental design.</strong> The reactive loop updates the current map after observation. SCM additionally pools transition relations across past episodes. Memory should help under structured change and should not help when changes are random.</figcaption>
+    </figure>
 
-    <section id="scope">
-      <div class="section-label">04 · Evaluation design</div>
-      <h2>Tests beyond a successful route</h2>
-      <div class="evaluation-grid">
-        <article><h3>Withheld transition</h3><p>Checks whether learned structure transfers to a spatial change that was not available during training.</p></article>
-        <article><h3>Zero-information control</h3><p>Separates genuine evidence-based updates from changes that could occur without an informative cue.</p></article>
-        <article><h3>Matched intervention</h3><p>Holds the world, seed, physics, and controller fixed so that behavior can be traced to the prediction difference.</p></article>
-      </div>
-    </section>
+    <div class="comparison">
+      <div><h3>Spatial Change Memory</h3><p>A cue at one gate updates a shared model of how transitions co-vary, allowing belief about a downstream gate to change before it enters the observation radius.</p></div>
+      <div><h3>Reactive baseline</h3><p>The baseline shares the maze, controller, and current observations, but retains its target until direct sensory evidence forces a local map update.</p></div>
+    </div>
+  </section>
 
-    <section id="status" class="status-box">
-      <div class="section-label">05 · Publication</div>
-      <h2>Accepted workshop paper</h2>
-      <p>Accepted at the <a href="https://continual-world-models-workshop.github.io/">NeurIPS 2026 Workshop on Continual World Models</a>.</p>
-      <p class="small">The public paper, citation, code, and benchmark materials will be linked here after their official release.</p>
-    </section>
-  </main>
+  <section id="results" class="text-section">
+    <h2>Representative telemetry</h2>
+    <table>
+      <thead><tr><th>Measure</th><th>Reactive</th><th>SCM</th></tr></thead>
+      <tbody>
+        <tr><td>Obsolete-target persistence</td><td>10.46 s</td><td>0.0083 s</td></tr>
+        <tr><td>Completion time</td><td>41.89 s</td><td>28.86 s</td></tr>
+        <tr><td>Prediction timing</td><td>Direct observation</td><td>17.81 s earlier</td></tr>
+      </tbody>
+    </table>
+    <p class="note">These values describe the representative telemetry-enabled rerun shown above. They are not population means; aggregate evidence remains part of the frozen manuscript evaluation.</p>
+  </section>
 
-  <footer><a href="../../index.html">Yuhang Sun</a><span>MazeWorldModel · October 2026</span><a href="#main">Back to top ↑</a></footer>
-</div>
+  <section class="text-section">
+    <h2>Evaluation design</h2>
+    <dl>
+      <dt>Withheld transition</dt><dd>Tests transfer beyond a location-specific response.</dd>
+      <dt>Zero-information control</dt><dd>Checks that the update depends on an informative cue.</dd>
+      <dt>Matched intervention</dt><dd>Holds the maze, seed, physics, and low-level controller fixed while changing the downstream prediction.</dd>
+    </dl>
+  </section>
+
+  <section class="publication">
+    <h2>Publication status</h2>
+    <p>Accepted at the <a href="https://continual-world-models-workshop.github.io/">NeurIPS 2026 Workshop on Continual World Models</a>. The paper, citation, code, and benchmark materials will be linked here after public release.</p>
+  </section>
+</main>
+
+<footer><a href="../../index.html">Yuhang Sun</a><span>MazeWorldModel · 2026</span><a href="#main">Back to top ↑</a></footer>
 </body>
 </html>
