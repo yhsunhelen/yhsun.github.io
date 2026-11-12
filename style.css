@@ -35,6 +35,8 @@ section:last-of-type{margin-bottom:0}
 .publication p{margin:3px 0;font-size:14px}
 .publication .description{color:#626262;margin-top:7px}
 .publication .paper-links{font-size:12px;margin-top:6px}
+.arxiv-badge{display:inline-flex;align-items:center;margin-left:7px;padding:1px 6px;border:1px solid #a9473f;border-radius:2px;color:#a9473f;font:700 10px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;letter-spacing:.02em;vertical-align:.18em;text-decoration:none}
+.arxiv-badge:hover{background:#a9473f;color:#fff;text-decoration:none}
 .coming-soon{color:var(--muted)}
 .authors strong{font-weight:500;text-decoration:underline;text-underline-offset:3px}
 .section-title{display:flex;align-items:baseline;justify-content:space-between;gap:15px}
